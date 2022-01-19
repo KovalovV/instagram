@@ -1,11 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
 // import mainPageIcon from "./assets/icons/mainPageIcon.svg";
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <header>Instagram</header>
-    </div>
+    <Router>
+      <nav>Navigation panel</nav>
+      <div>
+        <header>Instagram</header>
+      </div>
+    </Router>
   );
 }
 
