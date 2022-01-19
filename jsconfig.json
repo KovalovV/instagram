@@ -1,10 +1,11 @@
 {
-    "compilerOptions": {
-      "baseUrl": "src",
-      "paths": {}
-    },
-    "exclude": [
-        "node_modelus", 
-        "public"
-    ]
-  }
+  "compilerOptions": {
+    "baseUrl": "src",
+    "jsx": "react"
+    // "paths": {
+    //   "@styles": ["styles/index"]
+    // }
+  },
+  "include": ["src"],
+  "exclude": ["node_modelus", "public"]
+}
