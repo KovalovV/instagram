@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <nav>Navigation panel</nav>
+      <nav>Navigation panell</nav>
       <div>
         <header>Instagram</header>
       </div>
