@@ -1,5 +1,17 @@
 import { api } from "api";
 import { setCurrentUser } from "store/actions/user";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+export const setCurrentUserThunk = () => async (dispatch) => {
+  const auth = getAuth();
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const authUserData = await api.user.getUserById(user.uid);
+      const res = authUserData.data();
+      dispatch(setCurrentUser(res));
+    }
+  });
+};
 
 export const googleAuthThunk = () => async (dispatch) => {
   const { user } = await api.user.googleAuth();

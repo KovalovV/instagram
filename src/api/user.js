@@ -1,5 +1,6 @@
 import {
   getAuth,
+  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -8,17 +9,38 @@ import {
 import { setDoc, getDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "firebase.config";
 
-export const getMe = () => {
+export const getUserById = async (id) => {
+  const userRef = doc(db, "users", id);
+  const userSnap = await getDoc(userRef);
+  return userSnap;
+};
+
+export const getMe = async () => {
   const auth = getAuth();
-  return auth.currentUser;
+  // eslint-disable-next-line no-unused-vars
+  let authUser;
+  // eslint-disable-next-line consistent-return
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      authUser = user;
+      console.log("authUser", authUser, "user", user);
+      const authUserData = await getUserById(authUser.uid);
+      console.log("authUserData", authUserData.data());
+      return authUserData;
+    }
+  });
+  // console.log("authUser", authUser);
 };
 
 export const setUser = async (formData, id) => {
   const additionalUserProperties = {
+    id,
     name: "",
     bio: "",
-    folowers: [],
-    folowing: [],
+    avatar: "",
+    website: "",
+    followers: [],
+    following: [],
     posts: [],
     saved: [],
     timestamp: serverTimestamp(),
@@ -27,12 +49,6 @@ export const setUser = async (formData, id) => {
   delete formDataDb.password;
 
   await setDoc(doc(db, "users", id), formDataDb);
-};
-
-export const getUserById = async (id) => {
-  const userRef = doc(db, "users", id);
-  const userSnap = await getDoc(userRef);
-  return userSnap;
 };
 
 export const googleAuth = async () => {

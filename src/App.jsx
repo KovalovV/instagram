@@ -9,10 +9,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { getTheme } from "config/theme";
 
+import NavBar from "components/common/nav-bar";
+
 import SignIn from "pages/sign-in";
 import SignUp from "pages/sign-up";
 import ForgotPassword from "pages/forgot-password";
 import Home from "pages/home";
+import UserProfile from "pages/user-profile";
 
 import GlobalStyles from "styles/globalStyles";
 
@@ -23,8 +26,10 @@ function App() {
         <Router>
           <GlobalStyles />
           <ToastContainer />
+          <NavBar />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<UserProfile />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

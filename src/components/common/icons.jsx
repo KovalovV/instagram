@@ -1,8 +1,10 @@
 import React from "react";
 
 import { ReactComponent as ExploreIcon } from "assets/icons/exploreIcon.svg";
+import { ReactComponent as GreyInstagramIcon } from "assets/icons/greyInstagramIcon.svg";
 import { ReactComponent as GoogleIcon } from "assets/icons/googleIcon.svg";
 import { ReactComponent as HeartIcon } from "assets/icons/heartIcon.svg";
+import { ReactComponent as HomeIcon } from "assets/icons/homeIcon.svg";
 import { ReactComponent as LikeIcon } from "assets/icons/likeIcon.svg";
 import { ReactComponent as MessengerIcon } from "assets/icons/messengerIcon.svg";
 import { ReactComponent as OptionsIcon } from "assets/icons/optionsIcon.svg";
@@ -12,6 +14,7 @@ import { ReactComponent as SavedIcon } from "assets/icons/savedIcon.svg";
 import { ReactComponent as SearchIcon } from "assets/icons/searchIcon.svg";
 import { ReactComponent as TagIcon } from "assets/icons/tagIcon.svg";
 import { ReactComponent as VideoIcon } from "assets/icons/videoIcon.svg";
+import { ReactComponent as CloseIcon } from "assets/icons/closeIcon.svg";
 
 const getIcon = (iconName) => {
   switch (iconName) {
@@ -19,8 +22,12 @@ const getIcon = (iconName) => {
       return <ExploreIcon />;
     case "googleIcon":
       return <GoogleIcon />;
+    case "greyInstagramIcon":
+      return <GreyInstagramIcon />;
     case "heartIcon":
       return <HeartIcon />;
+    case "homeIcon":
+      return <HomeIcon />;
     case "likeIcon":
       return <LikeIcon />;
     case "messengerIcon":
@@ -39,6 +46,8 @@ const getIcon = (iconName) => {
       return <TagIcon />;
     case "videoIcon":
       return <VideoIcon />;
+    case "closeIcon":
+      return <CloseIcon />;
 
     default:
       return <span />;
