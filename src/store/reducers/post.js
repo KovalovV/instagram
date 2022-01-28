@@ -1,28 +1,22 @@
 const initialState = {
-  currentUser: {},
-  authed: false,
-  isUserLoading: true,
+  posts: [],
+  saved: [],
+  isPostLoading: true,
 };
 
 const postReducer = (state = initialState, { type, payload } = {}) => {
   switch (type) {
-    case "SET_CURRENT_USER":
+    case "SET_USER_POSTS":
       return {
         ...state,
-        currentUse: payload,
-        authed: true,
-        isUserLoading: false,
+        posts: payload,
+        isPostLoading: false,
       };
-    case "LOG_OUT_USER":
+    case "SET_USER_SAVED_POSTS":
       return {
         ...state,
-        currentUser: {},
-        authed: false,
-      };
-    case "IS_USER_LOADING":
-      return {
-        ...state,
-        isUserLoading: payload,
+        saved: payload,
+        isPostLoading: false,
       };
     default:
       return state;
