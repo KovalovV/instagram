@@ -3,7 +3,7 @@ const sizes = {
   full: { width: "100%" },
   small: { width: "120px" },
   medium: { width: "144px" },
-  large: { width: "156px" },
+  large: { width: "216px" },
 };
 
 const colors = {

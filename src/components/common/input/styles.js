@@ -2,6 +2,20 @@ import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
 import { colors, borders } from "./config";
 
+const searchStyles = css`
+  border-radius: 8px;
+  min-width: 125px;
+  width: 268px;
+  height: 65%;
+  cursor: text;
+  padding: 0 16px;
+
+  &::placeholder {
+    font-weight: 300;
+    font-size: 16px;
+  }
+`;
+
 const formStyles = css`
   border: 1px solid ${colors.darkGrey};
   border-radius: 4px;
@@ -22,6 +36,7 @@ const initialStyles = css`
 `;
 
 const inputStyles = {
+  textSearch: searchStyles,
   textRegister: formStyles,
   email: formStyles,
   password: formStyles,
@@ -51,7 +66,8 @@ export const StyledInput = styled.input`
 `;
 
 export const Wrapper = styled.div`
-  /* ${flex.alignCenter} */
+  ${flex.alignCenter}
   position: relative;
   width: 100%;
+  height: 100%;
 `;

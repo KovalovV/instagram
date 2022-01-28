@@ -1,5 +1,6 @@
-// import { SingButton } from "pages/Login/styles";
-import { StyledButton } from "../button/styles";
+/* eslint-disable no-nested-ternary */
+import { Icon } from "components/common/icons";
+import { StyledButton } from "components/common/button/styles";
 import { StyledInput, Wrapper } from "./styles";
 
 const Input = ({
@@ -31,6 +32,27 @@ const Input = ({
         type="button"
       >
         {type === "password" ? "Show" : "Hide"}
+      </StyledButton>
+    </Wrapper>
+  ) : type === "textSearch" ? (
+    <Wrapper>
+      <StyledInput
+        type={type}
+        border={border}
+        color={color}
+        bgColor={bgColor}
+        placeholder={placeholder}
+        onChange={onChange}
+        id={id}
+      />
+      <StyledButton
+        onClick={onClick}
+        size="default"
+        color="dark"
+        bgColor="transparent"
+        type="deleteButton"
+      >
+        <Icon icon="closeIcon" />
       </StyledButton>
     </Wrapper>
   ) : (
