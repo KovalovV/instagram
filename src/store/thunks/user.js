@@ -39,7 +39,7 @@ export const signInUserThunk = (userData) => async (dispatch) => {
 
 export const signUpUserThunk = (userData) => async (dispatch) => {
   try {
-    if (!(await api.user.isLoginFree(userData.login))) {
+    if (!(await api.user.getUserByLogin(userData.login))) {
       const { user } = await api.user.signUpUser(userData);
 
       api.user.setUser(userData, user.uid);
