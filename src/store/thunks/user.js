@@ -32,23 +32,26 @@ export const signInUserThunk = (userData) => async (dispatch) => {
     dispatch(setCurrentUser(loggedUserData));
 
     return 0;
-  } catch (err) {
-    return Promise.reject(err);
+  } catch (error) {
+    return Promise.reject(error);
   }
 };
 
 export const signUpUserThunk = (userData) => async (dispatch) => {
   try {
-    const { user } = await api.user.signUpUser(userData);
+    if (!(await api.user.isLoginFree(userData.login))) {
+      const { user } = await api.user.signUpUser(userData);
 
-    api.user.setUser(userData, user.uid);
-    const newUser = await api.user.getUserById(user.uid);
-    const newUserData = newUser.data();
+      api.user.setUser(userData, user.uid);
+      const newUser = await api.user.getUserById(user.uid);
+      const newUserData = newUser.data();
 
-    dispatch(setCurrentUser(newUserData));
-
+      dispatch(setCurrentUser(newUserData));
+    } else {
+      throw Error("This login is already exist");
+    }
     return 0;
-  } catch (err) {
-    return Promise.reject(err);
+  } catch (error) {
+    return Promise.reject(error);
   }
 };

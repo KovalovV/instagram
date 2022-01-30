@@ -4,20 +4,14 @@ import {
   setCurrentUserSavedPost,
 } from "store/actions/post";
 
-export const setCurrentUserPostThunk = (userId) => async (dispatch) => {
+export const setCurrentUserPostsThunk = (userId) => async (dispatch) => {
   const userPosts = await api.post.getAllUserPosts(userId);
-
-  // const loggedUser = await api.user.getUserById(user.uid);
-  // const loggedUserData = loggedUser.data();
 
   dispatch(setCurrentUserPost(userPosts));
 };
 
-export const setCurrentUserSavedPostThunk = (saved) => async (dispatch) => {
+export const setCurrentUserSavedPostsThunk = (saved) => async (dispatch) => {
   const userSavedPosts = await api.post.getAllUserSavedPosts(saved);
-
-  // const loggedUser = await api.user.getUserById(user.uid);
-  // const loggedUserData = loggedUser.data();
 
   dispatch(setCurrentUserSavedPost(userSavedPosts));
 };
