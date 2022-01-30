@@ -9,15 +9,35 @@ export const ContentType = styled.div(
     font-size: 12px;
     text-transform: uppercase;
 
-    a {
-      ${flex.center}
-      height: 52px;
-      text-align: center;
-      letter-spacing: 1px;
-      margin-right: 60px;
+    .activeType {
+      border-top: 1px solid #262626;
+      color: #262626;
+
+      svg {
+        color: #262626;
+      }
     }
 
-    a:last-of-type {
+    ${down(735)} {
+      .activeType {
+        border-top: none;
+        svg {
+          color: #0095f6;
+        }
+      }
+    }
+  `
+);
+
+export const ContentTypeItem = styled.a(
+  ({ theme: { down } }) => css`
+    ${flex.center}
+    height: 52px;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-right: 60px;
+
+    &:last-of-type {
       margin-right: 0px;
     }
 
@@ -26,11 +46,9 @@ export const ContentType = styled.div(
     }
 
     ${down(735)} {
-      a {
-        height: 44px;
-        margin-right: 0px;
-        flex-basis: 25%;
-      }
+      height: 44px;
+      margin-right: 0px;
+      flex-basis: 25%;
 
       svg {
         width: 24px;
@@ -45,27 +63,85 @@ export const ContentType = styled.div(
 );
 
 export const Posts = styled.div(
-  ({ theme: { up } }) => css`
+  ({ theme: { down, up } }) => css`
     border-top: 1px solid #dbdbdb;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 5px;
-
-    /* display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 293px));
-    justify-content: center;
-    grid-gap: 2px; */
+    grid-gap: 28px;
 
     ${up(735)} {
       border-top: none;
     }
+
+    ${down(735)} {
+      grid-gap: 3px;
+    }
   `
 );
 
+export const PostItemWrapper = styled.div`
+  position: relative;
+  cursor: pointer;
+`;
+
+export const ExtraInfo = styled.div`
+  /* ${flex.center} */
+  display: none;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  color: #fff;
+
+  &:hover {
+    ${flex.center}
+  }
+`;
+
 export const PostItem = styled.div`
-  height: 33vh;
   img {
     width: 100%;
     height: 100%;
+  }
+
+  &:hover + ${ExtraInfo} {
+    ${flex.center}
+  }
+`;
+
+export const InfoItem = styled.div`
+  ${flex.alignCenter}
+
+  &:first-child {
+    margin-right: 20px;
+  }
+
+  svg {
+    margin-right: 10px;
+  }
+
+  span {
+    font-weight: 600;
+  }
+`;
+
+export const EmptyPosts = styled.div`
+  ${flex.center}
+  flex-direction: column;
+  padding: 20px;
+
+  svg {
+    margin: 50px;
+  }
+
+  p {
+    font-weight: 300;
+    color: #262626;
+    font-size: 28px;
+    line-height: 32px;
   }
 `;

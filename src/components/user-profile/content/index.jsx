@@ -1,50 +1,109 @@
-import { useEffect } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Icon } from "components/common/icons";
 
 import {
-  setCurrentUserPostThunk,
-  setCurrentUserSavedPostThunk,
+  setCurrentUserPostsThunk,
+  setCurrentUserSavedPostsThunk,
 } from "store/thunks/post";
 
-import { ContentType, Posts, PostItem } from "./styles";
+import {
+  ContentType,
+  ContentTypeItem,
+  Posts,
+  PostItemWrapper,
+  PostItem,
+  InfoItem,
+  ExtraInfo,
+  EmptyPosts,
+} from "./styles";
 
 const Content = () => {
-  const contentTypeName = ["posts", "video", "saved", "tag"];
-
   const dispatch = useDispatch();
   const { id, saved } = useSelector((state) => state.user.currentUser);
-  const { posts } = useSelector((state) => state.post);
+  const { posts, saved: savedPosts } = useSelector((state) => state.post);
+
+  const [content, setContent] = useState(posts);
+  const [activeType, setActiveType] = useState("posts");
 
   useEffect(() => {
-    dispatch(setCurrentUserPostThunk(id));
-    dispatch(setCurrentUserSavedPostThunk(saved));
+    setContent(posts);
+  }, [posts]);
+
+  useEffect(() => {
+    dispatch(setCurrentUserPostsThunk(id));
+    dispatch(setCurrentUserSavedPostsThunk(saved));
   }, [dispatch, id, saved]);
+
+  const onClickPosts = (e) => {
+    setActiveType(`${e.target.id}`);
+    setContent(posts);
+  };
+
+  const onClickSaved = (e) => {
+    setActiveType(`${e.target.id}`);
+    setContent(savedPosts);
+  };
+
+  const onClickEmpty = () => false;
+
+  const contentLoadName = [
+    onClickPosts,
+    onClickEmpty,
+    onClickSaved,
+    onClickEmpty,
+  ];
+  const contentTypeName = ["posts", "video", "saved", "tag"];
+
+  const onKeyDown = () => false;
 
   return (
     <>
       <ContentType>
-        {contentTypeName.map((type) => (
-          <a key={type}>
-            <Icon icon={`${type}Icon`} /> <span>{` ${type}`}</span>
-          </a>
+        {contentTypeName.map((type, index) => (
+          <ContentTypeItem
+            id={`${type}`}
+            className={activeType === type && "activeType"}
+            role="button"
+            tabIndex={index}
+            key={`${type}-${index}`}
+            onClick={contentLoadName[index]}
+            onKeyDown={onKeyDown}
+          >
+            <Icon id={`${type}`} icon={`${type}Icon`} />{" "}
+            <span id={`${type}`}>{` ${type}`}</span>
+          </ContentTypeItem>
         ))}
       </ContentType>
       <Posts>
-        {posts &&
-          posts.map((post, index) => {
-            console.log("posts", posts);
-            console.log("post", post);
-
-            return (
-              // eslint-disable-next-line react/no-array-index-key
+        {Boolean(content.length) &&
+          content.map((post, index) => (
+            <PostItemWrapper>
               <PostItem key={index}>
                 <img src={post.image} alt="Post" />
               </PostItem>
-            );
-          })}
+              <ExtraInfo>
+                <InfoItem key={1}>
+                  <Icon icon="filledHeartIcon" fill="#fff" />
+                  <span>{post.likes.length}</span>
+                </InfoItem>
+                <InfoItem key={41}>
+                  <Icon icon="commentIcon" fill="#fff" />
+                  <span>{post.comments.length}</span>
+                </InfoItem>
+              </ExtraInfo>
+            </PostItemWrapper>
+          ))}
       </Posts>
+      {!content.length && (
+        <EmptyPosts>
+          <Icon icon="cameraIcon" />
+          <p>No Posts Yet</p>
+        </EmptyPosts>
+      )}
     </>
   );
 };
