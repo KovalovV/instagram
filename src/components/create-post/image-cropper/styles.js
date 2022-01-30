@@ -55,9 +55,16 @@ export const Header = styled.div`
 export const ImageContainer = styled.div`
   width: 348px;
   height: 348px;
-  overflow: visible;
 
-  div img {
+  div {
+    overflow: scroll;
+    height: 100%;
+    width: auto;
+  }
+
+  div div img {
+    margin: 0 auto;
+    border-radius: 5px;
     height: 100%;
     width: auto;
   }

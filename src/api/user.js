@@ -20,6 +20,18 @@ import {
 } from "firebase/firestore";
 import { db } from "firebase.config";
 
+export const getUserByLogin = async (login) => {
+  const collectionRef = collection(db, "users");
+
+  const querySet = query(collectionRef, where("login", "==", login));
+  const querySnap = await getDocs(querySet);
+
+  const users = [];
+  querySnap.forEach((document) => users.push(document.data()));
+
+  return users.length ? users[0] : false;
+};
+
 export const getUserById = async (id) => {
   const userRef = doc(db, "users", id);
   const userSnap = await getDoc(userRef);
@@ -133,15 +145,15 @@ export const signUpUser = async (formData) => {
   return userCredential;
 };
 
-export const isLoginFree = async (login) => {
-  const collectionRef = collection(db, "users");
+// export const isLoginFree = async (login) => {
+//   const collectionRef = collection(db, "users");
 
-  const querySet = query(collectionRef, where("login", "==", login));
+//   const querySet = query(collectionRef, where("login", "==", login));
 
-  const querySnap = await getDocs(querySet);
+//   const querySnap = await getDocs(querySet);
 
-  const users = [];
-  querySnap.forEach((document) => users.push(document.data()));
+//   const users = [];
+//   querySnap.forEach((document) => users.push(document.data()));
 
-  return users.length;
-};
+//   return users.length;
+// };

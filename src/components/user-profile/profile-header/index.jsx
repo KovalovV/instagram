@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import Button from "components/common/button";
 import { Icon } from "components/common/icons";
@@ -16,9 +18,13 @@ import {
   ProfileMobileAbout,
 } from "./styles";
 
-const Header = () => {
+const Header = ({ isAuthUserPage }) => {
   const { login, name, bio, website, avatar, followers, following, posts } =
-    useSelector((state) => state.user.currentUser);
+    useSelector((state) =>
+      isAuthUserPage
+        ? state.user.currentUser
+        : state.selectedUser.selectedUserProfile
+    );
 
   const stats = [posts, followers, following];
   const statsName = ["posts", "followers", "following"];
@@ -34,15 +40,29 @@ const Header = () => {
             <ProfileLogin>
               <h2>{login}</h2>
             </ProfileLogin>
-            <Icon icon="optionsIcon" />
-            <Button
-              type="editProfile"
-              size="large"
-              color="black"
-              bgColor="transparent"
-            >
-              Edit Profile
-            </Button>
+
+            {isAuthUserPage ? (
+              <>
+                <Icon icon="optionsIcon" />
+                <Button
+                  type="editProfile"
+                  size="large"
+                  color="black"
+                  bgColor="transparent"
+                >
+                  Edit Profile
+                </Button>
+              </>
+            ) : (
+              <Button
+                type="followProfile"
+                size="small"
+                color="white"
+                bgColor="blue"
+              >
+                Follow
+              </Button>
+            )}
           </Flex>
           <ProfileStats>
             {stats.map((stat, index) => (

@@ -25,14 +25,12 @@ const ImageCropper = () => {
   const [srcImg, setSrcImg] = useState(null);
   const [image, setImage] = useState(null);
   const [crop, setCrop] = useState({ aspect: 1 / 1 });
-  const [result, setResult] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleImage = (e) => {
     setSrcImg(URL.createObjectURL(e.target.files[0]));
-    console.log(e.target.files[0]);
   };
 
   const getCroppedImg = () => {
@@ -56,14 +54,10 @@ const ImageCropper = () => {
       );
 
       const base64Image = canvas.toDataURL("image/jpeg", 1);
-      setResult(base64Image);
 
       dispatch(setPostImage(base64Image));
-
-      console.log(result);
       return 1;
     } catch (error) {
-      console.log("crop the image");
       return 0;
     }
   };
@@ -87,7 +81,6 @@ const ImageCropper = () => {
             <h1>Create new post</h1>
             <div className="corner">
               <Button
-                // onClick={onClick}
                 size="default"
                 color="blue"
                 bgColor="transparent"

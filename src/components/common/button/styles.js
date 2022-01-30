@@ -2,9 +2,12 @@ import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
 import { sizes, colors } from "./config";
 
+const followProfileStyles = css`
+  padding: 5px 9px;
+  border-radius: 5px;
+`;
+
 const editProfileStyles = css`
-  font-size: 14px;
-  font-weight: 500;
   padding: 5px 9px;
   border-radius: 4px;
   border: 1px solid #dbdbdb;
@@ -34,6 +37,7 @@ const buttonStyles = {
   button: inputButtonStyles,
   deleteButton: inputDeleteTextStyles,
   editProfile: editProfileStyles,
+  followProfile: followProfileStyles,
 };
 
 const getButtonStyleByType = (type) => buttonStyles[type] || initialStyles;

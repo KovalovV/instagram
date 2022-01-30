@@ -55,7 +55,6 @@ const Details = () => {
             <h1>Create new post</h1>
             <div className="corner">
               <Button
-                // onClick={onClick}
                 size="default"
                 color="blue"
                 bgColor="transparent"

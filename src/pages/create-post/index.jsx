@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { setCurrentUserThunk } from "store/thunks/user";
 
@@ -11,9 +11,10 @@ import Details from "components/create-post/details";
 
 import { ModalWrapper } from "./styles";
 
-// eslint-disable-next-line arrow-body-style
 const Posting = () => {
   const params = useParams();
+  const navigate = useNavigate();
+  const modalWrap = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -21,9 +22,23 @@ const Posting = () => {
     dispatch(setCurrentUserThunk());
   }, [dispatch]);
 
+  const onClickClose = () => {
+    modalWrap.current.style.display = "none";
+    navigate("/home");
+    return false;
+  };
+
+  const onKeyDownClose = (key) => {
+    if (key.keyCode === 27) {
+      modalWrap.current.style.display = "none";
+      navigate("/home");
+    }
+    return false;
+  };
+
   return (
-    <ModalWrapper>
-      <Icon className="close" icon="closeModalIcon" />
+    <ModalWrapper ref={modalWrap} onKeyDown={onKeyDownClose} tabIndex="0">
+      <Icon className="close" icon="closeModalIcon" onClick={onClickClose} />
       {params.postingStep === "image" ? <ImageCropper /> : <Details />}
     </ModalWrapper>
   );

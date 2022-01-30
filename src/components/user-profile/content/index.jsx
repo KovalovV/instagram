@@ -21,9 +21,13 @@ import {
   EmptyPosts,
 } from "./styles";
 
-const Content = () => {
+const Content = ({ isAuthUserPage }) => {
   const dispatch = useDispatch();
-  const { id, saved } = useSelector((state) => state.user.currentUser);
+  const { id, saved } = useSelector((state) =>
+    isAuthUserPage
+      ? state.user.currentUser
+      : state.selectedUser.selectedUserProfile
+  );
   const { posts, saved: savedPosts } = useSelector((state) => state.post);
 
   const [content, setContent] = useState(posts);
@@ -43,20 +47,30 @@ const Content = () => {
     setContent(posts);
   };
 
+  const onClickVideo = (e) => {
+    setActiveType(`${e.target.id}`);
+    setContent([]);
+  };
+
   const onClickSaved = (e) => {
     setActiveType(`${e.target.id}`);
     setContent(savedPosts);
   };
 
-  const onClickEmpty = () => false;
+  const onClickTag = (e) => {
+    setActiveType(`${e.target.id}`);
+    setContent([]);
+  };
 
   const contentLoadName = [
     onClickPosts,
-    onClickEmpty,
+    onClickVideo,
     onClickSaved,
-    onClickEmpty,
+    onClickTag,
   ];
-  const contentTypeName = ["posts", "video", "saved", "tag"];
+  const contentTypeName = isAuthUserPage
+    ? ["posts", "video", "saved", "tagged"]
+    : ["posts", "tagged"];
 
   const onKeyDown = () => false;
 
