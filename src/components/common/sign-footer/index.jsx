@@ -16,7 +16,7 @@ const SignIn = () => {
         {isSignUpPage ? "You" : "Don't"} have an account?
         <Link to={isSignUpPage ? "/sign-in" : "/sign-up"}>
           {" "}
-          Sign {isSignUpPage ? "up" : "in"}
+          Sign {isSignUpPage ? "in" : "up"}
         </Link>
       </SignUpInCard>
       <GetApp>

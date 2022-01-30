@@ -8,6 +8,7 @@ export const StyledNav = styled.nav`
   height: 60px;
   background-color: #fff;
   border-bottom: 1px solid #dbdbdb;
+  z-index: 10;
 `;
 
 export const NavContainer = styled.div`
@@ -52,6 +53,10 @@ export const IconNavigateWrapper = styled.div`
 export const IconNavigate = styled.div(
   ({ theme: { up } }) => css`
     margin-right: 14px;
+
+    a svg {
+      outline: none;
+    }
 
     ${up(735)} {
       margin-right: 24px;

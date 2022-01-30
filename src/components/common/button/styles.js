@@ -27,7 +27,7 @@ const inputDeleteTextStyles = css`
 `;
 
 const initialStyles = css`
-  position: static;
+  position: relative;
 `;
 
 const buttonStyles = {

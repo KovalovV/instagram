@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import instagramLoginLogo from "assets/images/instagramLoginLogo.png";
@@ -21,8 +21,9 @@ const NavBar = () => {
 
   const emptyPath = ["/sign-up", "/sign-in", "/forgot-password"];
 
-  const { avatar } = useSelector((state) => state.user.currentUser);
+  const { avatar, login } = useSelector((state) => state.user.currentUser);
   const navigateIcons = ["home", "messenger", "plus", "explore", "heart"];
+  const routeIcons = ["home", "messenger", "create", "explore", "heart"];
 
   if (emptyPath.some((path) => path === location.pathname)) {
     return <span />;
@@ -32,7 +33,9 @@ const NavBar = () => {
     <StyledNav>
       <NavContainer>
         <Logo>
-          <img src={instagramLoginLogo} alt="Instagram Logo" />
+          <Link to={`/${login}`}>
+            <img src={instagramLoginLogo} alt="Instagram Logo" />
+          </Link>
         </Logo>
         <SearchWrapper>
           <Input
@@ -49,11 +52,21 @@ const NavBar = () => {
         <IconNavigateWrapper>
           {navigateIcons.map((name, index) => (
             <IconNavigate key={`${name}${index}`}>
-              <Icon icon={`${name}Icon`} />
+              {name === "plus" ? (
+                <Link to={`/${routeIcons[index]}/image`}>
+                  <Icon icon={`${name}Icon`} />
+                </Link>
+              ) : (
+                <Link to={`/${routeIcons[index]}`}>
+                  <Icon icon={`${name}Icon`} />
+                </Link>
+              )}
             </IconNavigate>
           ))}
           <UserPhoto>
-            <img src={avatar} alt="Avatar" />
+            <Link to={`/${login}`}>
+              <img src={avatar} alt="Avatar" />
+            </Link>
           </UserPhoto>
         </IconNavigateWrapper>
       </NavContainer>
