@@ -6,7 +6,18 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { setDoc, getDoc, doc, serverTimestamp } from "firebase/firestore";
+import {
+  where,
+  setDoc,
+  getDoc,
+  getDocs,
+  doc,
+  collection,
+  query,
+  updateDoc,
+  serverTimestamp,
+  arrayUnion,
+} from "firebase/firestore";
 import { db } from "firebase.config";
 
 export const getUserById = async (id) => {
@@ -32,12 +43,34 @@ export const getMe = async () => {
   // console.log("authUser", authUser);
 };
 
+export const setUserPost = async (postData, userId) => {
+  const userRef = doc(db, "users", userId);
+
+  const postRef = doc(collection(db, "posts"));
+
+  const additionalPostProperties = {
+    id: postRef.id,
+    userID: userId,
+    likes: [],
+    comments: [],
+    timestamp: serverTimestamp(),
+  };
+
+  const postDataDb = { ...postData, ...additionalPostProperties };
+
+  await setDoc(postRef, postDataDb);
+  await updateDoc(userRef, {
+    posts: arrayUnion(postRef.id),
+  });
+};
+
 export const setUser = async (formData, id) => {
   const additionalUserProperties = {
     id,
     name: "",
     bio: "",
-    avatar: "",
+    avatar:
+      "https://firebasestorage.googleapis.com/v0/b/instagram-e4745.appspot.com/o/newUserAvatar.jpg?alt=media&token=0ef9aa7b-9350-4592-9178-d3d0e5e763a9",
     website: "",
     followers: [],
     following: [],
@@ -98,4 +131,17 @@ export const signUpUser = async (formData) => {
   );
 
   return userCredential;
+};
+
+export const isLoginFree = async (login) => {
+  const collectionRef = collection(db, "users");
+
+  const querySet = query(collectionRef, where("login", "==", login));
+
+  const querySnap = await getDocs(querySet);
+
+  const users = [];
+  querySnap.forEach((document) => users.push(document.data()));
+
+  return users.length;
 };

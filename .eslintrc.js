@@ -27,6 +27,8 @@ module.exports = {
     "jsx-a11y/label-has-associated-control": "off",
     "react/function-component-definition": 1,
     "react/prop-types": 1,
+    "jsx-a11y/click-events-have-key-events": 1,
+    "jsx-a11y/no-static-element-interactions": 1,
     "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,
     "react/react-in-jsx-scope": 0,
@@ -46,6 +48,8 @@ module.exports = {
       rules: {
         "react/function-component-definition": "off",
         "react/prop-types": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
       },
     },
   ],

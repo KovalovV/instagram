@@ -31,9 +31,6 @@ export const SignArticle = styled.article(
 export const Card = styled.div(
   ({ theme: { up, breakpoints } }) => css`
     width: 100%;
-    /* padding: 20px 0px;
-    background-color: #fff;
-    border: 1px solid #dbdbdb; */
 
     ${up(breakpoints.sm)} {
       padding: 20px 0px;

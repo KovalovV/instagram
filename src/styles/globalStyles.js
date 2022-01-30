@@ -121,7 +121,7 @@ a {
 }
 
 a:focus {
-    outline: thin dotted;
+    outline: 0;
 }
 
 a:active,
@@ -166,7 +166,7 @@ select,
 textarea {
     font-size: 100%; /* 1 */
     margin: 0; /* 2 */
-    vertical-align: baseline; /* 3 */
+    /* vertical-align: baseline; 3 */
     *vertical-align: middle; /* 3 */
 }
 
@@ -215,6 +215,10 @@ input[type="search"] {
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box; /* 2 */
     box-sizing: content-box;
+}
+
+input[type="file"] {
+    display: none;
 }
 
 /**
@@ -287,6 +291,38 @@ fieldset {
 
 textarea {
     resize: vertical;
+}
+
+::-webkit-scrollbar-button {
+    background-image:url('');
+    background-repeat:no-repeat;
+    width:5px;
+    height:0px
+}
+
+::-webkit-scrollbar-track {
+    background-color:#ecedee
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background-color:#f0f0f0;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background-color:#262626;
+}
+
+::-webkit-resizer{
+    background-image:url('');
+    background-repeat:no-repeat;
+    width:4px;
+    height:0px
+}
+
+::-webkit-scrollbar{
+    width: 4px;
 }
 `;
 
