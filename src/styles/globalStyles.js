@@ -118,6 +118,8 @@ html {
 
 a {
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
 a:focus {
