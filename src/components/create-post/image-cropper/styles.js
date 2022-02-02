@@ -27,7 +27,6 @@ export const Center = styled.div`
 `;
 
 export const Header = styled.div`
-  /* ${flex.center} */
   display: flex;
   width: 100%;
   height: 41px;
@@ -57,16 +56,15 @@ export const ImageContainer = styled.div`
   height: 348px;
 
   div {
-    overflow: scroll;
-    height: 100%;
-    width: auto;
+    height: auto;
+    width: 100%;
   }
 
   div div img {
-    margin: 0 auto;
+    overflow: scroll;
     border-radius: 5px;
-    height: 100%;
-    width: auto;
+    height: auto;
+    width: 100%;
   }
 `;
 

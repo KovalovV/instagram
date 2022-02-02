@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 
 import Button from "components/common/button";
 import { Icon } from "components/common/icons";
@@ -46,11 +46,11 @@ const Header = ({ isAuthUserPage }) => {
                 <Icon icon="optionsIcon" />
                 <Button
                   type="editProfile"
-                  size="large"
+                  size="small"
                   color="black"
                   bgColor="transparent"
                 >
-                  Edit Profile
+                  <Link to="/accounts/edit">Edit Profile</Link>
                 </Button>
               </>
             ) : (
@@ -93,16 +93,27 @@ const Header = ({ isAuthUserPage }) => {
             <ProfileLogin>
               <h2>{login}</h2>
             </ProfileLogin>
-            <Icon icon="optionsIcon" />
+            {isAuthUserPage && <Icon icon="optionsIcon" />}
           </Flex>
-          <Button
-            type="editProfile"
-            size="large"
-            color="black"
-            bgColor="transparent"
-          >
-            Edit Profile
-          </Button>
+          {isAuthUserPage ? (
+            <Button
+              type="editProfile"
+              size="large"
+              color="black"
+              bgColor="transparent"
+            >
+              Edit Profile
+            </Button>
+          ) : (
+            <Button
+              type="followProfile"
+              size="small"
+              color="white"
+              bgColor="blue"
+            >
+              Follow
+            </Button>
+          )}
         </ProfileDescription>
       </ProfileMobileHeader>
       <ProfileMobileAbout>

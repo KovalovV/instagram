@@ -65,15 +65,6 @@ export const ProfileAvatar = styled.div(
   `
 );
 
-// export const ProfileDescription = styled.section(
-//   ({ theme: { down } }) => css`
-//     width: 65%;
-//     ${down(735)} {
-//       display: flex;
-//     }
-//   `
-// );
-
 export const ProfileDescription = styled.section`
   width: 65%;
 `;
@@ -140,6 +131,7 @@ export const ProfileStats = styled.ul(
     display: none;
     width: 70%;
     margin-bottom: 20px;
+    margin-top: 15px;
 
     li {
       display: inline-block;

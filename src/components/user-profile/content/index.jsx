@@ -2,6 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { Icon } from "components/common/icons";
 
@@ -22,6 +23,8 @@ import {
 } from "./styles";
 
 const Content = ({ isAuthUserPage }) => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const { id, saved } = useSelector((state) =>
     isAuthUserPage
@@ -95,11 +98,11 @@ const Content = ({ isAuthUserPage }) => {
       <Posts>
         {Boolean(content.length) &&
           content.map((post, index) => (
-            <PostItemWrapper>
+            <PostItemWrapper key={`${post.id}`}>
               <PostItem key={index}>
                 <img src={post.image} alt="Post" />
               </PostItem>
-              <ExtraInfo>
+              <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
                 <InfoItem key={1}>
                   <Icon icon="filledHeartIcon" fill="#fff" />
                   <span>{post.likes.length}</span>

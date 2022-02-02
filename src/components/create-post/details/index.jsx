@@ -22,8 +22,6 @@ import {
 const Details = () => {
   const descriptionLimit = 2200;
 
-  const [descriptionText, setDescription] = useState("");
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,16 +31,13 @@ const Details = () => {
 
   const onChange = (e) => {
     if (e.target.value.length < descriptionLimit) {
-      setDescription(e.target.value);
+      dispatch(setPostDescription(e.target.value));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    dispatch(setPostDescription(descriptionText));
-
-    await dispatch(setUserNewPostThunk({ image, description }, id));
+    dispatch(setUserNewPostThunk({ image, description }, id));
     navigate("/");
   };
 
@@ -74,7 +69,7 @@ const Details = () => {
                 <h1>{login}</h1>
               </HeaderDetails>
               <label htmlFor="description">
-                {descriptionText.length}/{descriptionLimit}
+                {description.length}/{descriptionLimit}
               </label>
               <Textarea
                 id="description"
@@ -83,7 +78,7 @@ const Details = () => {
                 border="none"
                 bgColor="transparent"
                 placeholder="Write a caption..."
-                value={descriptionText}
+                value={description}
                 onChange={onChange}
               />
             </PostDetails>
