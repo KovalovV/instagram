@@ -1,7 +1,12 @@
 import styled, { css } from "styled-components";
 import { colors, borders, sizes } from "./config";
 
-// eslint-disable-next-line no-unused-vars
+const textareaCommentStyles = css`
+  margin-right: 40px;
+  color: #262626;
+  position: relative;
+`;
+
 const textareaDescriptionStyles = css`
   color: #262626;
   position: relative;
@@ -13,6 +18,7 @@ const initialStyles = css`
 
 const textareaStyles = {
   description: textareaDescriptionStyles,
+  comment: textareaCommentStyles,
 };
 
 const getTextareaStyleByType = (type) => textareaStyles[type] || initialStyles;
@@ -24,6 +30,7 @@ export const StyledTextarea = styled.textarea`
   border: 0;
   overflow: auto;
   padding: 0 16px;
+  scrollbar-width: none;
   resize: none;
   cursor: text;
 

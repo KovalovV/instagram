@@ -51,10 +51,11 @@ export const StyledButton = styled.button`
   text-align: center;
   cursor: pointer;
 
-  ${({ size, color, bgColor, type }) => css`
+  ${({ size, color, bgColor, type, disabled }) => css`
     width: ${sizes[size].width};
     color: ${colors[color]};
     background-color: ${colors[bgColor]};
+    opacity: ${disabled ? 0.3 : 1};
 
     ${getButtonStyleByType(type)}
   `}

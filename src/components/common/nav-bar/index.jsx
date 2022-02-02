@@ -1,6 +1,13 @@
 /* eslint-disable react/no-array-index-key */
+import { useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+// import {
+//   setSelectedPostThunk,
+//   setSelectedPostCommentsThunk,
+// } from "store/thunks/post";
+import { setCurrentUserThunk } from "store/thunks/user";
 
 import instagramLoginLogo from "assets/images/instagramLoginLogo.png";
 import Input from "components/common/input";
@@ -18,12 +25,17 @@ import {
 
 const NavBar = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const emptyPath = ["/sign-up", "/sign-in", "/forgot-password"];
 
   const { avatar, login } = useSelector((state) => state.user.currentUser);
   const navigateIcons = ["home", "messenger", "plus", "explore", "heart"];
   const routeIcons = ["home", "messenger", "create", "explore", "heart"];
+
+  useEffect(() => {
+    dispatch(setCurrentUserThunk());
+  }, [dispatch]);
 
   if (emptyPath.some((path) => path === location.pathname)) {
     return <span />;
