@@ -14,9 +14,7 @@ import {
   doc,
   collection,
   query,
-  updateDoc,
   serverTimestamp,
-  arrayUnion,
 } from "firebase/firestore";
 import { db } from "firebase.config";
 
@@ -46,34 +44,13 @@ export const getMe = async () => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       authUser = user;
-      console.log("authUser", authUser, "user", user);
+      // console.log("authUser", authUser, "user", user);
       const authUserData = await getUserById(authUser.uid);
-      console.log("authUserData", authUserData.data());
+      // console.log("authUserData", authUserData.data());
       return authUserData;
     }
   });
   // console.log("authUser", authUser);
-};
-
-export const setUserPost = async (postData, userId) => {
-  const userRef = doc(db, "users", userId);
-
-  const postRef = doc(collection(db, "posts"));
-
-  const additionalPostProperties = {
-    id: postRef.id,
-    userID: userId,
-    likes: [],
-    comments: [],
-    timestamp: serverTimestamp(),
-  };
-
-  const postDataDb = { ...postData, ...additionalPostProperties };
-
-  await setDoc(postRef, postDataDb);
-  await updateDoc(userRef, {
-    posts: arrayUnion(postRef.id),
-  });
 };
 
 export const setUser = async (formData, id) => {
