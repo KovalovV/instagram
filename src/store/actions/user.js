@@ -3,6 +3,16 @@ export const setCurrentUser = (userData) => ({
   payload: userData,
 });
 
+export const setSavedPost = (selectedPostCommentsData) => ({
+  type: "SET_SAVED_POST",
+  payload: selectedPostCommentsData,
+});
+
+export const removeSavedPost = (selectedPostCommentsData) => ({
+  type: "REMOVE_SAVED_POST",
+  payload: selectedPostCommentsData,
+});
+
 //   export const setIsUserLoading: (state, { payload }) => {
 //     isUserLoading = payload;
 //   };

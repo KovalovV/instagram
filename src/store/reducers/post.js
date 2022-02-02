@@ -1,6 +1,8 @@
 const initialState = {
   posts: [],
   saved: [],
+  comments: [],
+  selectedPost: {},
   isPostLoading: true,
 };
 
@@ -18,8 +20,20 @@ const postReducer = (state = initialState, { type, payload } = {}) => {
         saved: payload,
         isPostLoading: false,
       };
+    case "SET_SELECTED_POST":
+      return {
+        ...state,
+        selectedPost: payload,
+        isPostLoading: false,
+      };
+    case "SET_POST_COMMENTS":
+      return {
+        ...state,
+        comments: payload,
+        isPostLoading: false,
+      };
     default:
-      return state;
+      return { ...state };
   }
 };
 

@@ -22,7 +22,7 @@ const selectedUserReducer = (state = initialState, { type, payload } = {}) => {
         isSelectedUserLoading: payload,
       };
     default:
-      return state;
+      return { ...state };
   }
 };
 

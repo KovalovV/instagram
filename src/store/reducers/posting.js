@@ -26,7 +26,7 @@ const postingReducer = (state = initialState, { type, payload } = {}) => {
         isPostLoading: true,
       };
     default:
-      return state;
+      return { ...state };
   }
 };
 
