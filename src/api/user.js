@@ -11,12 +11,16 @@ import {
   setDoc,
   getDoc,
   getDocs,
+  // eslint-disable-next-line no-unused-vars
+  updateDoc,
   doc,
   collection,
   query,
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "firebase.config";
+
+import { toast } from "react-toastify";
 
 export const getUserByLogin = async (login) => {
   const collectionRef = collection(db, "users");
@@ -122,15 +126,27 @@ export const signUpUser = async (formData) => {
   return userCredential;
 };
 
-// export const isLoginFree = async (login) => {
-//   const collectionRef = collection(db, "users");
+export const updateProfileInfo = async (editedProfileInfo) => {
+  console.log("userProfileData in updateProfileInfo", editedProfileInfo);
 
-//   const querySet = query(collectionRef, where("login", "==", login));
+  try {
+    const userRef = doc(db, "users", editedProfileInfo.id);
+    const userSnap = await getDoc(userRef);
 
-//   const querySnap = await getDocs(querySet);
+    const userData = userSnap.data();
 
-//   const users = [];
-//   querySnap.forEach((document) => users.push(document.data()));
+    if (
+      !(await getUserByLogin(editedProfileInfo.login)) ||
+      userData.login === editedProfileInfo.login
+    ) {
+      await updateDoc(userRef, editedProfileInfo);
 
-//   return users.length;
-// };
+      toast.success("Profile info updated");
+    } else {
+      throw Error("This login is exists");
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Profile info not updated");
+  }
+};

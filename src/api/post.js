@@ -131,7 +131,6 @@ export const removeUserSavedPost = async (postId, userId) => {
 };
 
 export const setUserComment = async (postId, userId, content) => {
-  console.log("postId", postId, "userId", userId, "content", content);
   const postRef = doc(db, "posts", postId);
   const commentRef = doc(collection(db, "comments"));
 
