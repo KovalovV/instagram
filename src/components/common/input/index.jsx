@@ -10,7 +10,9 @@ const Input = ({
   bgColor,
   placeholder,
   onChange,
+  value,
   id,
+  disabled,
   onClick,
 }) =>
   type === "password" || type === "passwordVisible" ? (
@@ -22,6 +24,7 @@ const Input = ({
         bgColor={bgColor}
         placeholder={placeholder}
         onChange={onChange}
+        value={value}
         id={id}
       />
       <StyledButton
@@ -63,7 +66,9 @@ const Input = ({
       bgColor={bgColor}
       placeholder={placeholder}
       onChange={onChange}
+      value={value}
       id={id}
+      disabled={disabled}
     />
   );
 export default Input;

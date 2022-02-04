@@ -2,6 +2,25 @@ import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
 import { colors, borders } from "./config";
 
+const editProfileStyles = css`
+  border-radius: 3px;
+  font-size: 16px;
+  height: 32px;
+  padding: 0 10px;
+  width: 100%;
+  cursor: text;
+  padding: 0 16px;
+
+  &::placeholder {
+    font-weight: 300;
+    font-size: 16px;
+  }
+
+  &:focus {
+    border: 2px solid #0095f6;
+  }
+`;
+
 const searchStyles = css`
   border-radius: 8px;
   min-width: 125px;
@@ -36,6 +55,7 @@ const initialStyles = css`
 `;
 
 const inputStyles = {
+  textEditProfile: editProfileStyles,
   textSearch: searchStyles,
   textRegister: formStyles,
   email: formStyles,
@@ -52,16 +72,17 @@ export const StyledInput = styled.input`
   font-size: 14px;
   color: #262626;
 
-  ${({ type, border, color, bgColor }) => css`
+  ${({ type, border, color, bgColor, disabled }) => css`
     border: ${borders[border]};
     color: ${colors[color]};
     background-color: ${colors[bgColor]};
-
-    ${getInputStyleByType(type)}
+    opacity: ${disabled ? 0.7 : 1};
 
     &:focus {
       border: ${borders[border]};
     }
+
+    ${getInputStyleByType(type)}
   `}
 `;
 

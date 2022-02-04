@@ -2,6 +2,14 @@ import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
 import { sizes, colors } from "./config";
 
+const submitEditStyles = css`
+  padding: 5px 9px;
+  border-radius: 5px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+`;
+
 const followProfileStyles = css`
   padding: 5px 9px;
   border-radius: 5px;
@@ -37,6 +45,7 @@ const buttonStyles = {
   button: inputButtonStyles,
   deleteButton: inputDeleteTextStyles,
   editProfile: editProfileStyles,
+  submitEdit: submitEditStyles,
   followProfile: followProfileStyles,
 };
 
