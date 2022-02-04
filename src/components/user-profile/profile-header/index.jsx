@@ -44,14 +44,16 @@ const Header = ({ isAuthUserPage }) => {
             {isAuthUserPage ? (
               <>
                 <Icon icon="optionsIcon" />
-                <Button
-                  type="editProfile"
-                  size="small"
-                  color="black"
-                  bgColor="transparent"
-                >
-                  <Link to="/accounts/edit">Edit Profile</Link>
-                </Button>
+                <Link to="/accounts/edit">
+                  <Button
+                    type="editProfile"
+                    size="small"
+                    color="black"
+                    bgColor="transparent"
+                  >
+                    Edit Profile
+                  </Button>
+                </Link>
               </>
             ) : (
               <Button
@@ -96,14 +98,16 @@ const Header = ({ isAuthUserPage }) => {
             {isAuthUserPage && <Icon icon="optionsIcon" />}
           </Flex>
           {isAuthUserPage ? (
-            <Button
-              type="editProfile"
-              size="large"
-              color="black"
-              bgColor="transparent"
-            >
-              Edit Profile
-            </Button>
+            <Link to="/accounts/edit">
+              <Button
+                type="editProfile"
+                size="large"
+                color="black"
+                bgColor="transparent"
+              >
+                Edit Profile
+              </Button>
+            </Link>
           ) : (
             <Button
               type="followProfile"

@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { Provider } from "react-redux";
-import store from "store";
+import { useEffect, useState } from "react";
+
+import { useDispatch } from "react-redux";
+// import store from "store";
+import { setCurrentUserThunk } from "store/thunks/user";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
@@ -22,28 +25,44 @@ import PostView from "pages/post-view";
 
 import GlobalStyles from "styles/globalStyles";
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+
+  // const handleAuthStateChanged = (user) => {
+  //   dispatch(authStateChanged(user)).finally(() => {
+  //     setIsAuthLoading(false);
+  //   });
+  // };
+
+  useEffect(() => {
+    dispatch(setCurrentUserThunk()).finally(() => {
+      setIsAuthLoading(false);
+    });
+  }, [dispatch]);
+
+  if (isAuthLoading) return <div>Loading...</div>;
+
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={getTheme()}>
-        <Router>
-          <GlobalStyles />
-          <ToastContainer />
-          <NavBar />
-          <Routes>
-            <Route path="/:userLogin" element={<UserProfile />} />
-            <Route path="/:accounts/edit" element={<EditProfile />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/create/:postingStep" element={<Posting />} />
-            <Route path="/p/:postId" element={<PostView />} />
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-          </Routes>
-        </Router>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={getTheme()}>
+      <Router>
+        <GlobalStyles />
+        <ToastContainer />
+        <NavBar />
+        <Routes>
+          <Route path="/:userLogin" element={<UserProfile />} />
+          <Route path="/:accounts/edit" element={<EditProfile />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/create/:postingStep" element={<Posting />} />
+          <Route path="/p/:postId" element={<PostView />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

@@ -1,8 +1,6 @@
-import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+/* eslint-disable no-unused-vars */
+import { useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
-import { setCurrentUserThunk } from "store/thunks/user";
 
 import { Icon } from "components/common/icons";
 
@@ -15,12 +13,6 @@ const Posting = () => {
   const params = useParams();
   const navigate = useNavigate();
   const modalWrap = useRef(null);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setCurrentUserThunk());
-  }, [dispatch]);
 
   const onClickClose = () => {
     modalWrap.current.style.display = "none";

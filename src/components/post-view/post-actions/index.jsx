@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 
 import { api } from "api";
 
+import { setUpdatedUserThunk } from "store/thunks/user";
 import { setSelectedPostThunk } from "store/thunks/post";
-import { setCurrentUserThunk } from "store/thunks/user";
 
 import { Icon } from "components/common/icons";
 
@@ -40,10 +40,10 @@ const PostActions = () => {
   const onClickSave = async () => {
     if (isSavedPost()) {
       await api.post.removeUserSavedPost(postId, currentUserId);
-      dispatch(setCurrentUserThunk());
+      dispatch(setUpdatedUserThunk(currentUserId));
     } else {
       await api.post.setUserSavedPost(postId, currentUserId);
-      dispatch(setCurrentUserThunk());
+      dispatch(setUpdatedUserThunk(currentUserId));
     }
   };
   const actionPostName = ["heart", "borderComment", "saved"];

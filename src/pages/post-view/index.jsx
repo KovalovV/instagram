@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate, Link } from "react-router-dom";
@@ -9,7 +8,6 @@ import {
   setSelectedPostThunk,
   setSelectedPostCommentsThunk,
 } from "store/thunks/post";
-import { setCurrentUserThunk } from "store/thunks/user";
 
 import PostActions from "components/post-view/post-actions";
 import AddComment from "components/post-view/comment";
@@ -51,7 +49,6 @@ const PostView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setCurrentUserThunk());
     dispatch(setSelectedPostThunk(postId));
     dispatch(setSelectedPostCommentsThunk(postId));
   }, [dispatch, postId]);

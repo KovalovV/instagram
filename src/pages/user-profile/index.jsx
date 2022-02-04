@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -6,7 +5,6 @@ import { useParams } from "react-router-dom";
 import Header from "components/user-profile/profile-header";
 import Content from "components/user-profile/content";
 
-import { setCurrentUserThunk } from "store/thunks/user";
 import { setSelectedUserProfileThunk } from "store/thunks/selectedUser";
 
 import { MainContainer, ProfileContainer } from "./styles";
@@ -24,7 +22,6 @@ const UserProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setCurrentUserThunk());
     dispatch(setSelectedUserProfileThunk(params.userLogin));
   }, [dispatch, params.userLogin]);
 
