@@ -1,6 +1,7 @@
 import { api } from "api";
-import { setCurrentUser } from "store/actions/user";
+import { setCurrentUser, setUpdatedUser } from "store/actions/user";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { toast } from "react-toastify";
 
 export const setCurrentUserThunk = () => async (dispatch) => {
   const auth = getAuth();
@@ -9,6 +10,9 @@ export const setCurrentUserThunk = () => async (dispatch) => {
       const authUserData = await api.user.getUserById(user.uid);
       const res = authUserData.data();
       dispatch(setCurrentUser(res));
+      console.log("onAuthStateChanged");
+    } else {
+      toast.error("User not exist");
     }
   });
 };
@@ -54,4 +58,13 @@ export const signUpUserThunk = (userData) => async (dispatch) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+export const setUpdatedUserThunk = (userId) => async (dispatch) => {
+  const user = await api.user.getUserById(userId);
+  const userData = user.data();
+  console.log("user", user);
+  console.log("userData", userData);
+
+  dispatch(setUpdatedUser(userData));
 };

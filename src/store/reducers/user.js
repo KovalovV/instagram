@@ -13,15 +13,12 @@ const userReducer = (state = initialState, { type, payload } = {}) => {
         authed: true,
         isUserLoading: false,
       };
-    case "SET_SAVED_POST":
+    case "SET_UPDATED_USER":
       return {
         ...state,
         currentUser: payload,
-      };
-    case "REMOVE_SAVED_POST":
-      return {
-        ...state,
-        currentUser: payload,
+        authed: true,
+        isUserLoading: false,
       };
     case "IS_USER_LOADING":
       return {
