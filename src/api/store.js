@@ -6,11 +6,8 @@ import {
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
-// import { toast } from "react-toastify";
-
-export const storeImage = async (currentUserId, image) => {
-  console.log("image in storeImage", image);
-  return new Promise((resolve, reject) => {
+export const storeImage = async (currentUserId, image) =>
+  new Promise((resolve, reject) => {
     const storage = getStorage();
     const fileName = `${currentUserId}-${uuidv4()}-${image.name}`;
     const storageRef = ref(storage, `images/${fileName}`);
@@ -31,4 +28,3 @@ export const storeImage = async (currentUserId, image) => {
       }
     );
   });
-};

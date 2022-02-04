@@ -73,7 +73,6 @@ export const Image = styled.div(
 export const MobileImage = styled.div(
   ({ theme: { down } }) => css`
     display: none;
-    /* ${flex.center} */
     width: 100%;
     min-height: 280px;
     max-height: 650px;
@@ -123,6 +122,8 @@ export const HeaderDetails = styled.div`
   img {
     width: 32px;
     height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
     margin-right: 10px;
   }
 
@@ -162,6 +163,8 @@ export const DescriptionHeader = styled.div`
   img {
     width: 32px;
     height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
     margin-right: 10px;
   }
 

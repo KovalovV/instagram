@@ -14,4 +14,11 @@ const colors = {
   transparent: "transparent",
 };
 
-export { sizes, colors };
+const borders = {
+  none: "none",
+  dark: "1px solid #a8a8a8",
+  grey: "1px solid #fafafa",
+  blue: "1px solid #0095f6",
+};
+
+export { sizes, colors, borders };

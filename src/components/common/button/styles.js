@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
-import { sizes, colors } from "./config";
+import { sizes, colors, borders } from "./config";
 
 const submitEditStyles = css`
   padding: 5px 9px;
@@ -60,10 +60,11 @@ export const StyledButton = styled.button`
   text-align: center;
   cursor: pointer;
 
-  ${({ size, color, bgColor, type, disabled }) => css`
+  ${({ size, color, bgColor, border, type, disabled }) => css`
     width: ${sizes[size].width};
     color: ${colors[color]};
     background-color: ${colors[bgColor]};
+    border: ${borders[border]};
     opacity: ${disabled ? 0.3 : 1};
 
     ${getButtonStyleByType(type)}

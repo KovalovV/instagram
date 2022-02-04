@@ -7,12 +7,14 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import {
+  arrayRemove,
+  arrayUnion,
   where,
   setDoc,
   getDoc,
   getDocs,
-  // eslint-disable-next-line no-unused-vars
   updateDoc,
+  deleteDoc,
   doc,
   collection,
   query,
@@ -127,8 +129,6 @@ export const signUpUser = async (formData) => {
 };
 
 export const updateProfileInfo = async (editedProfileInfo) => {
-  console.log("userProfileData in updateProfileInfo", editedProfileInfo);
-
   try {
     const userRef = doc(db, "users", editedProfileInfo.id);
     const userSnap = await getDoc(userRef);
@@ -146,7 +146,56 @@ export const updateProfileInfo = async (editedProfileInfo) => {
       throw Error("This login is exists");
     }
   } catch (error) {
-    console.log(error);
     toast.error("Profile info not updated");
   }
+};
+
+export const setUserFollowing = async (userId, followingId) => {
+  const userRef = doc(db, "users", userId);
+  const followingIdUserRef = doc(db, "users", followingId);
+  const followingDocRef = doc(collection(db, "followings"));
+
+  const followingData = {
+    id: followingDocRef.id,
+    userID: userId,
+    followingID: followingId,
+  };
+
+  await setDoc(followingDocRef, followingData);
+
+  await updateDoc(userRef, {
+    following: arrayUnion(followingId),
+  });
+
+  await updateDoc(followingIdUserRef, {
+    followers: arrayUnion(userId),
+  });
+};
+
+export const removeUserFollowing = async (userId, followingId) => {
+  const userRef = doc(db, "users", userId);
+  const followingIdUserRef = doc(db, "users", followingId);
+
+  const followingsRef = collection(db, "followings");
+
+  const querySet = query(
+    followingsRef,
+    where("userID", "==", userId),
+    where("followingID", "==", followingId)
+  );
+
+  const querySnap = await getDocs(querySet);
+
+  const following = [];
+  querySnap.forEach((followingDoc) => following.push(followingDoc));
+
+  await deleteDoc(doc(db, "followings", following[0].id));
+
+  await updateDoc(userRef, {
+    following: arrayRemove(followingId),
+  });
+
+  await updateDoc(followingIdUserRef, {
+    followers: arrayRemove(userId),
+  });
 };

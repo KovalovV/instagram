@@ -51,6 +51,8 @@ export const Image = styled.div(
       width: 38px;
       height: 38px;
       margin-right: 20px;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     h1 {

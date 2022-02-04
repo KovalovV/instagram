@@ -50,6 +50,7 @@ export const ProfileAvatar = styled.div(
     img {
       width: 166px;
       height: 166px;
+      object-fit: cover;
       border-radius: 50%;
     }
 

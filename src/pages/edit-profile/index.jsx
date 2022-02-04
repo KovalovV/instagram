@@ -35,6 +35,7 @@ const EditProfile = () => {
   } = useSelector((state) => state.user.currentUser);
 
   const [newAvatar, setNewAvatar] = useState(currentAvatar);
+  const [previewAvatar, setPreviewAvatar] = useState(currentAvatar);
   const [userProfileData, setUserProfileData] = useState({
     id: currentUserId,
     name: "",
@@ -97,7 +98,10 @@ const EditProfile = () => {
   ]);
 
   const handleImage = async (e) => {
-    setNewAvatar(e.target.files[0]);
+    const [photoObj] = e.target.files;
+
+    setNewAvatar(photoObj);
+    setPreviewAvatar(URL.createObjectURL(photoObj));
   };
 
   const onChangeEdit = (e) => {
@@ -138,7 +142,7 @@ const EditProfile = () => {
     <MainContainer>
       <EditForm onSubmit={onSubmitEdit}>
         <Image>
-          <img src={userProfileData.avatar} alt="Avatar" />
+          <img src={previewAvatar || userProfileData.avatar} alt="Avatar" />
           <div className="change-avatar">
             <h1>{currentLogin}</h1>
             <label htmlFor="avatar">Change Profile Photo</label>
