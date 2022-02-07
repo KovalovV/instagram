@@ -62,10 +62,12 @@ export const StyledButton = styled.button`
 
   ${({ size, color, bgColor, border, type, disabled }) => css`
     width: ${sizes[size].width};
-    color: ${colors[color]};
-    background-color: ${colors[bgColor]};
+    height: ${sizes[size].height};
+    color: ${disabled ? colors[color].disabled : colors[color].active};
+    background-color: ${disabled
+      ? colors[bgColor].disabled
+      : colors[bgColor].active};
     border: ${borders[border]};
-    opacity: ${disabled ? 0.3 : 1};
 
     ${getButtonStyleByType(type)}
   `}

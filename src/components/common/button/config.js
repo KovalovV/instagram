@@ -1,23 +1,24 @@
 const sizes = {
-  default: { width: "auto" },
-  full: { width: "100%" },
-  small: { width: "120px" },
+  default: { width: "auto", height: "auto" },
+  full: { width: "100%", height: "auto" },
+  small: { width: "110px", height: "30px" },
   medium: { width: "144px" },
   large: { width: "216px" },
 };
 
 const colors = {
-  dark: "#262626",
-  grey: "#fafafa",
-  blue: "#0095f6",
-  white: "#ffffff",
-  transparent: "transparent",
+  dark: { active: "#262626", disabled: "#ffffff" },
+  black: { active: "#262626", disabled: "#95d5fc" },
+  grey: { active: "#00fafafa95f6", disabled: "#95d5fc" },
+  blue: { active: "#0095f6", disabled: "#95d5fc" },
+  white: { active: "#ffffff", disabled: "#ffffff" },
+  transparent: { active: "transparent", disabled: "transparent" },
 };
 
 const borders = {
   none: "none",
   dark: "1px solid #a8a8a8",
-  grey: "1px solid #fafafa",
+  grey: "1px solid #dbdbdb",
   blue: "1px solid #0095f6",
 };
 

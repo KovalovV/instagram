@@ -32,7 +32,7 @@ const NavBar = () => {
     <StyledNav>
       <NavContainer>
         <Logo>
-          <Link to={`/${login}`}>
+          <Link to="/home">
             <img src={instagramLoginLogo} alt="Instagram Logo" />
           </Link>
         </Logo>

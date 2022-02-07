@@ -69,6 +69,7 @@ export const UserPhoto = styled.div`
     width: 24px;
     height: 24px;
     overflow: hidden;
+    object-fit: cover;
     border-radius: 50%;
     border: 1px solid #262626;
 

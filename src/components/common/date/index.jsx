@@ -1,8 +1,10 @@
+import { formatDate } from "utils/date";
+
 import { StyledDate } from "./styles";
 
-const Date = ({ uppercase, marginLeft, children }) => (
+const Date = ({ uppercase, marginLeft, date }) => (
   <StyledDate uppercase={uppercase} marginLeft={marginLeft}>
-    {children}
+    {date && formatDate(date.seconds * 1000)}
   </StyledDate>
 );
 
