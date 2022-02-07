@@ -23,6 +23,8 @@ import { ReactComponent as CloseIcon } from "assets/icons/closeIcon.svg";
 import { ReactComponent as CloseModalIcon } from "assets/icons/closeModalIcon.svg";
 import { ReactComponent as CommentIcon } from "assets/icons/commentIcon.svg";
 
+import { ReactComponent as Spinner } from "assets/spinner.svg";
+
 const getIcon = (iconName) => {
   switch (iconName) {
     case "borderCommentIcon":
@@ -69,6 +71,9 @@ const getIcon = (iconName) => {
       return <CloseModalIcon />;
     case "commentIcon":
       return <CommentIcon />;
+
+    case "spinner":
+      return <Spinner />;
 
     default:
       return <span />;
