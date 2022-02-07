@@ -7,6 +7,8 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import {
+  limit,
+  orderBy,
   arrayRemove,
   arrayUnion,
   where,
@@ -198,4 +200,40 @@ export const removeUserFollowing = async (userId, followingId) => {
   await updateDoc(followingIdUserRef, {
     followers: arrayRemove(userId),
   });
+};
+
+export const getUserFeed = async (userId) => {
+  const userDoc = await getUserById(userId);
+  const userData = userDoc.data();
+
+  const postsRef = collection(db, "posts");
+
+  const querySet = query(
+    postsRef,
+    where("userID", "in", userData.following),
+    orderBy("timestamp", "desc")
+  );
+  const querySnap = await getDocs(querySet);
+
+  const feedPosts = [];
+  querySnap.forEach((postDoc) => feedPosts.push(postDoc.data()));
+
+  return feedPosts;
+};
+
+export const getLastUsers = async (currentUserId) => {
+  const usersRef = collection(db, "users");
+
+  const querySet = query(
+    usersRef,
+    where("id", "!=", currentUserId),
+    orderBy("id", "timestamp", "desc"),
+    limit(5)
+  );
+  const querySnap = await getDocs(querySet);
+
+  const lastUsers = [];
+  querySnap.forEach((userDoc) => lastUsers.push(userDoc.data()));
+
+  return lastUsers;
 };
