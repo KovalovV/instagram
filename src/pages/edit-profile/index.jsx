@@ -9,6 +9,7 @@ import { setUpdatedUserThunk } from "store/thunks/user";
 
 import { toast } from "react-toastify";
 
+import Spinner from "components/common/spinner";
 import Input from "components/common/input";
 import Button from "components/common/button";
 
@@ -33,6 +34,8 @@ const EditProfile = () => {
     bio: currentBio,
     email: currentEmail,
   } = useSelector((state) => state.user.currentUser);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [newAvatar, setNewAvatar] = useState(currentAvatar);
   const [previewAvatar, setPreviewAvatar] = useState(currentAvatar);
@@ -122,20 +125,20 @@ const EditProfile = () => {
 
   const onSubmitEdit = async (e) => {
     e.preventDefault();
-    try {
-      const imageURL =
-        newAvatar === userProfileData.avatar
-          ? userProfileData.avatar
-          : await getImageUrl();
+    setIsLoading(true);
 
-      await api.user.updateProfileInfo({
-        ...userProfileData,
-        avatar: imageURL,
-      });
-      dispatch(setUpdatedUserThunk(userProfileData.id));
-    } catch (error) {
-      toast.error("Error");
-    }
+    const imageURL =
+      newAvatar === userProfileData.avatar
+        ? userProfileData.avatar
+        : await getImageUrl();
+
+    await api.user.updateProfileInfo({
+      ...userProfileData,
+      avatar: imageURL,
+    });
+
+    dispatch(setUpdatedUserThunk(userProfileData.id));
+    setIsLoading(false);
   };
 
   return (
@@ -174,11 +177,18 @@ const EditProfile = () => {
             </InputDesc>
           </Flex>
         ))}
-        <Button size="default" color="white" bgColor="blue" type="submitEdit">
-          Submit
+        <Button
+          size="small"
+          color="white"
+          bgColor="blue"
+          type="submitEdit"
+          disabled={isLoading}
+        >
+          {isLoading ? <Spinner width="20px" height="20px" /> : "Submit"}
         </Button>
       </EditForm>
     </MainContainer>
   );
 };
+
 export default EditProfile;

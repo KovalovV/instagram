@@ -54,19 +54,14 @@ const Header = ({ isAuthUserPage }) => {
     currentFollowings &&
     currentFollowings.some((following) => following === selectedId);
 
-  console.log("isFollowing", isFollowing());
-
   const handleFollow = async () => {
-    console.log("isFollowing", isFollowing());
     if (isFollowing()) {
       await api.user.removeUserFollowing(currentId, selectedId);
-      dispatch(setUpdatedUserThunk(currentId));
-      dispatch(setSelectedUserProfileThunk(params.userLogin));
     } else {
       await api.user.setUserFollowing(currentId, selectedId);
-      dispatch(setUpdatedUserThunk(currentId));
-      dispatch(setSelectedUserProfileThunk(params.userLogin));
     }
+    dispatch(setUpdatedUserThunk(currentId));
+    dispatch(setSelectedUserProfileThunk(params.userLogin));
   };
 
   return (
@@ -99,9 +94,9 @@ const Header = ({ isAuthUserPage }) => {
               <Button
                 type="followProfile"
                 size="small"
-                color={isFollowing() ? "black" : "white"}
+                color={isFollowing() ? "grey" : "white"}
                 bgColor={isFollowing() ? "white" : "blue"}
-                border={isFollowing() ? "dark" : "none"}
+                border={isFollowing() ? "grey" : "none"}
                 onClick={handleFollow}
               >
                 {isFollowing() ? "Unfollow" : "Follow"}

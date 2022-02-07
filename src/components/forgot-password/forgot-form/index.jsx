@@ -6,10 +6,9 @@ import { toast } from "react-toastify";
 
 import instagramLoginLogo from "assets/images/instagramLoginLogo.png";
 
-import { Icon } from "components/common/icons";
 import Input from "components/common/input";
 
-import { SignForm, SignButton, Or, SignGoogle } from "./styles";
+import { SignForm, SignButton } from "./styles";
 
 const ForgotPasswordForm = () => {
   const [isDisable, setIsDisable] = useState(true);
@@ -62,15 +61,6 @@ const ForgotPasswordForm = () => {
       >
         Send Email
       </SignButton>
-      <Or>
-        <div className="line" />
-        <span>Or</span>
-        <div className="line" />
-      </Or>
-      <SignGoogle>
-        <Icon icon="googleIcon" />
-        <p>Log In with Google</p>
-      </SignGoogle>
     </SignForm>
   );
 };

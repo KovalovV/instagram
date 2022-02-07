@@ -91,7 +91,7 @@ export const MobileImage = styled.div(
 
     ${down(735)} {
       display: flex;
-      min-height: 240px;
+      max-height: 280px;
 
       img {
         width: auto;
@@ -113,26 +113,10 @@ export const Details = styled.div(
   `
 );
 
-export const HeaderDetails = styled.div`
-  ${flex.alignCenter}
-  width: 100%;
-  height: 60px;
-  padding: 15px;
-
-  img {
-    width: 32px;
-    height: 32px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-
-  h1 {
-    color: #262626;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-  }
+export const LikeInfo = styled.div`
+  padding: 0px 16px;
+  color: #262626;
+  font-weight: 600;
 `;
 
 export const Comments = styled.div(
@@ -156,41 +140,6 @@ export const Comments = styled.div(
   `
 );
 
-export const DescriptionHeader = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-
-  img {
-    width: 32px;
-    height: 32px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-
-  span {
-    line-height: 20px;
-  }
-
-  .login {
-    color: #262626;
-    font-weight: 600;
-    font-size: 16px;
-
-    margin-top: -5px;
-    margin-right: 5px;
-    display: inline-flex;
-  }
-
-  .publacation-date {
-    color: #8e8e8e;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 16px;
-    margin: 15px 0px;
-  }
-`;
-
 export const ActionContainer = styled.div`
   position: absolute;
   bottom: 0;
@@ -200,10 +149,4 @@ export const ActionContainer = styled.div`
   border-top: 1px solid #dbdbdb;
   border-bottom-right-radius: 10px;
   background-color: #fff;
-`;
-
-export const LikeInfo = styled.div`
-  padding: 0px 16px;
-  color: #262626;
-  font-weight: 600;
 `;

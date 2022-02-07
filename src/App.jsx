@@ -23,6 +23,8 @@ import EditProfile from "pages/edit-profile";
 import Posting from "pages/create-post";
 import PostView from "pages/post-view";
 
+import LoaderScreen from "components/common/loader-screen";
+
 import GlobalStyles from "styles/globalStyles";
 
 const App = () => {
@@ -30,19 +32,13 @@ const App = () => {
 
   const [isAuthLoading, setIsAuthLoading] = useState(true);
 
-  // const handleAuthStateChanged = (user) => {
-  //   dispatch(authStateChanged(user)).finally(() => {
-  //     setIsAuthLoading(false);
-  //   });
-  // };
-
   useEffect(() => {
     dispatch(setCurrentUserThunk()).finally(() => {
       setIsAuthLoading(false);
     });
   }, [dispatch]);
 
-  if (isAuthLoading) return <div>Loading...</div>;
+  if (isAuthLoading) return <LoaderScreen />;
 
   return (
     <ThemeProvider theme={getTheme()}>
@@ -51,11 +47,13 @@ const App = () => {
         <ToastContainer />
         <NavBar />
         <Routes>
-          <Route path="/:userLogin" element={<UserProfile />} />
+          <Route path="/:userLogin/*" element={<UserProfile />}>
+            <Route path="p/:postId" element={<PostView />} />
+          </Route>
           <Route path="/:accounts/edit" element={<EditProfile />} />
           <Route path="/home" element={<Home />} />
           <Route path="/create/:postingStep" element={<Posting />} />
-          <Route path="/p/:postId" element={<PostView />} />
+          <Route path="/:userLogin/p/:postId" element={<PostView />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -26,7 +26,7 @@ const Content = ({ isAuthUserPage }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { id, saved } = useSelector((state) =>
+  const { id, login, saved } = useSelector((state) =>
     isAuthUserPage
       ? state.user.currentUser
       : state.selectedUser.selectedUserProfile
@@ -102,7 +102,7 @@ const Content = ({ isAuthUserPage }) => {
               <PostItem key={index}>
                 <img src={post.image} alt="Post" />
               </PostItem>
-              <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
+              <ExtraInfo onClick={() => navigate(`/${login}/p/${post.id}`)}>
                 <InfoItem key={1}>
                   <Icon icon="filledHeartIcon" fill="#fff" />
                   <span>{post.likes.length}</span>
