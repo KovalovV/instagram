@@ -5,7 +5,6 @@ import {
   setSelectedPost,
   setSelectedPostComments,
 } from "store/actions/post";
-import { setSelectedUserProfile } from "store/actions/selectedUser";
 
 export const setCurrentUserPostsThunk = (userId) => async (dispatch) => {
   const userPosts = await api.post.getAllUserPosts(userId);
@@ -26,10 +25,6 @@ export const setSelectedPostThunk = (postId) => async (dispatch) => {
   const selectedPost = await api.post.getPostById(postId);
   const selectedPostData = selectedPost.data();
 
-  const selectedUser = await api.user.getUserById(selectedPostData.userID);
-  const selectedUserData = selectedUser.data();
-
-  dispatch(setSelectedUserProfile(selectedUserData));
   dispatch(setSelectedPost(selectedPostData));
 };
 
