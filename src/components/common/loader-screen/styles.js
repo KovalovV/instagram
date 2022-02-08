@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { flex } from "utils/flex";
 
 export const LoaderScreenContainer = styled.div`
-  position: relative;
+  position: fixed;
 
   ${flex.center}
   width: 100vw;
