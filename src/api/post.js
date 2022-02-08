@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import {
   arrayUnion,
   arrayRemove,
@@ -15,8 +14,6 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "firebase.config";
-
-import { api } from "./index";
 
 export const getAllUserPosts = async (userId) => {
   const collectionRef = collection(db, "posts");
@@ -69,33 +66,13 @@ export const getAllPostCommentsById = async (postId) => {
 
   const querySnap = await getDocs(querySet);
 
-  const authorId = [];
-  querySnap.forEach((document) => authorId.push(document.data().authorID));
-
-  const authors = [];
-  // eslint-disable-next-line no-restricted-syntax
-  for (const author of authorId) {
-    // eslint-disable-next-line no-await-in-loop
-    const user = await api.user.getUserById(author);
-    const userData = user.data();
-    authors.push(userData);
-  }
-
-  const commentsData = [];
-  querySnap.forEach((document) => commentsData.push(document.data()));
-
   const comments = [];
-  commentsData.forEach((document, index) =>
-    comments.push({
-      ...document,
-      user: { ...authors[index] },
-    })
-  );
+  querySnap.forEach((document) => comments.push(document.data()));
 
   return comments;
 };
 
-export const setUserPost = async (postData, userId) => {
+export const addUserPost = async (postData, userId) => {
   const userRef = doc(db, "users", userId);
 
   const postRef = doc(collection(db, "posts"));
@@ -116,7 +93,7 @@ export const setUserPost = async (postData, userId) => {
   });
 };
 
-export const setUserSavedPost = async (postId, userId) => {
+export const addUserSavedPost = async (postId, userId) => {
   const userRef = doc(db, "users", userId);
   await updateDoc(userRef, {
     saved: arrayUnion(postId),
@@ -130,7 +107,7 @@ export const removeUserSavedPost = async (postId, userId) => {
   });
 };
 
-export const setUserComment = async (postId, userId, content) => {
+export const addUserComment = async (postId, userId, content) => {
   const postRef = doc(db, "posts", postId);
   const commentRef = doc(collection(db, "comments"));
 
@@ -149,7 +126,7 @@ export const setUserComment = async (postId, userId, content) => {
   });
 };
 
-export const setUserLike = async (postId, userId) => {
+export const addUserLike = async (postId, userId) => {
   const postRef = doc(db, "posts", postId);
   const likeRef = doc(collection(db, "likes"));
 

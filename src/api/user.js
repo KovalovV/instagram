@@ -1,11 +1,11 @@
 import {
   getAuth,
-  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+
 import {
   limit,
   orderBy,
@@ -39,26 +39,10 @@ export const getUserByLogin = async (login) => {
 };
 
 export const getUserById = async (id) => {
+  console.log("user id", id);
   const userRef = doc(db, "users", id);
   const userSnap = await getDoc(userRef);
   return userSnap;
-};
-
-export const getMe = async () => {
-  const auth = getAuth();
-  // eslint-disable-next-line no-unused-vars
-  let authUser;
-  // eslint-disable-next-line consistent-return
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      authUser = user;
-      // console.log("authUser", authUser, "user", user);
-      const authUserData = await getUserById(authUser.uid);
-      // console.log("authUserData", authUserData.data());
-      return authUserData;
-    }
-  });
-  // console.log("authUser", authUser);
 };
 
 export const setUser = async (formData, id) => {
@@ -152,7 +136,7 @@ export const updateProfileInfo = async (editedProfileInfo) => {
   }
 };
 
-export const setUserFollowing = async (userId, followingId) => {
+export const addUserFollowing = async (userId, followingId) => {
   const userRef = doc(db, "users", userId);
   const followingIdUserRef = doc(db, "users", followingId);
   const followingDocRef = doc(collection(db, "followings"));
@@ -208,17 +192,20 @@ export const getUserFeed = async (userId) => {
 
   const postsRef = collection(db, "posts");
 
-  const querySet = query(
-    postsRef,
-    where("userID", "in", userData.following),
-    orderBy("timestamp", "desc")
-  );
-  const querySnap = await getDocs(querySet);
+  if (userData.following.length) {
+    const querySet = query(
+      postsRef,
+      where("userID", "in", userData.following),
+      orderBy("timestamp", "desc")
+    );
+    const querySnap = await getDocs(querySet);
 
-  const feedPosts = [];
-  querySnap.forEach((postDoc) => feedPosts.push(postDoc.data()));
+    const feedPosts = [];
+    querySnap.forEach((postDoc) => feedPosts.push(postDoc.data()));
 
-  return feedPosts;
+    return feedPosts;
+  }
+  return [];
 };
 
 export const getLastUsers = async (currentUserId) => {
