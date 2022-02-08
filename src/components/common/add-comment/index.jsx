@@ -15,14 +15,14 @@ const AddComment = ({ postId }) => {
 
   const [commentText, setCommentText] = useState("");
 
-  const { id: userId } = useSelector((state) => state.user.currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   const onChange = (e) => {
     setCommentText(e.target.value);
   };
 
   const onClick = async () => {
-    await api.post.setUserComment(postId, userId, commentText);
+    await api.post.addUserComment(postId, currentUser.id, commentText);
     dispatch(setSelectedPostCommentsThunk(postId));
 
     setCommentText("");
@@ -39,7 +39,7 @@ const AddComment = ({ postId }) => {
         placeholder="Add a comment..."
         value={commentText}
         onChange={onChange}
-        onClick={() => onClick(postId, userId, commentText)}
+        onClick={() => onClick(postId, currentUser.id, commentText)}
       />
     </TextareaContainer>
   );

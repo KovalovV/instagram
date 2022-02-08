@@ -30,13 +30,13 @@ const UserComment = ({
       {user && (
         <>
           {withAvatar && (
-            <Link to={`/${user.login}`}>
+            <Link to={`/u/${user.login}`}>
               <img src={user.avatar} alt="Avatar" />
             </Link>
           )}
           <div className="description-container">
             <span className="login">
-              <Link to={`/${user.login}`}>{user.login}</Link>
+              <Link to={`/u/${user.login}`}>{user.login}</Link>
             </span>
             <span>{description}</span>
             {withDate && <Date date={postTimestamp} />}

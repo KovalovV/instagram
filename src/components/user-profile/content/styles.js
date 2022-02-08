@@ -23,6 +23,7 @@ export const ContentType = styled.div(
         border-top: none;
         svg {
           color: #0095f6;
+          fill: #0095f6;
         }
       }
     }
@@ -126,22 +127,5 @@ export const InfoItem = styled.div`
 
   span {
     font-weight: 600;
-  }
-`;
-
-export const EmptyPosts = styled.div`
-  ${flex.center}
-  flex-direction: column;
-  padding: 20px;
-
-  svg {
-    margin: 50px;
-  }
-
-  p {
-    font-weight: 300;
-    color: #262626;
-    font-size: 28px;
-    line-height: 32px;
   }
 `;

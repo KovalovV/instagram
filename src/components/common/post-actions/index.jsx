@@ -13,24 +13,12 @@ import { Icon } from "components/common/icons";
 import { PostAction } from "./styles";
 
 const PostActions = ({ currentUserId, saved, postId, likes, onChangeFeed }) => {
-  console.log("currentUserId", currentUserId);
-  console.log("saved", saved);
-  console.log("postId", postId);
-  console.log("likes", likes);
-
   const location = useLocation();
 
   const dispatch = useDispatch();
 
-  // const [likesLength, setLikesLength] = useState(0);
-  // console.log("likesLength", likesLength);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-
-  // const showLike = () =>
-  //   likes && isLiked
-  //     ? setLikesLength((prevState) => prevState + 1)
-  //     : setLikesLength((prevState) => prevState - 1);
 
   const isLikedPost = useCallback(
     () => likes && likes.some((like) => like === currentUserId),
@@ -47,15 +35,14 @@ const PostActions = ({ currentUserId, saved, postId, likes, onChangeFeed }) => {
   };
 
   const onClickLike = async () => {
-    console.log("isLikedPost()", isLikedPost());
     if (isLikedPost()) {
       setIsLiked(false);
       await api.post.removeUserLike(postId, currentUserId);
     } else {
       setIsLiked(true);
-      await api.post.setUserLike(postId, currentUserId);
+      await api.post.addUserLike(postId, currentUserId);
     }
-    if (location.pathname === "/home") {
+    if (location.pathname === "/") {
       handleChangeFeed();
     }
     dispatch(setSelectedPostThunk(postId));
@@ -69,10 +56,10 @@ const PostActions = ({ currentUserId, saved, postId, likes, onChangeFeed }) => {
       await api.post.removeUserSavedPost(postId, currentUserId);
     } else {
       setIsSaved(true);
-      await api.post.setUserSavedPost(postId, currentUserId);
+      await api.post.addUserSavedPost(postId, currentUserId);
     }
     dispatch(setUpdatedUserThunk(currentUserId));
-    // dispatch(setSelectedPostThunk(postId));
+    dispatch(setSelectedPostThunk(postId));
   };
   const actionPostName = ["heart", "borderComment", "saved"];
   const actionFnName = [onClickLike, onClickComment, onClickSave];
@@ -84,10 +71,6 @@ const PostActions = ({ currentUserId, saved, postId, likes, onChangeFeed }) => {
   useEffect(() => {
     setIsSaved(isSavedPost());
   }, [isSavedPost]);
-
-  // useEffect(() => {
-  //   setLikesLength(likes.length);
-  // });
 
   return (
     <PostAction>

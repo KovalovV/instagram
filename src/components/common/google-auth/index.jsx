@@ -6,12 +6,6 @@ import { Icon } from "components/common/icons";
 
 import { googleAuthThunk } from "store/thunks/user";
 
-// import { api } from "api";
-
-// import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-// import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
-// import { db } from "firebase.config";
-
 import { SignGoogle } from "./styles";
 
 const GoogleAuth = ({ isSignUpPage }) => {

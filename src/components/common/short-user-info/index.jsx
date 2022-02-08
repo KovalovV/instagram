@@ -21,11 +21,11 @@ const ShortUserInfo = ({ userId }) => {
     <HeaderDetails>
       {user && (
         <>
-          <Link to={`/${user.login}`}>
+          <Link to={`/u/${user.login}`}>
             <img src={user.avatar} alt="Avatar" />
           </Link>
           <h1>
-            <Link to={`/${user.login}`}>{user.login}</Link>
+            <Link to={`/u/${user.login}`}>{user.login}</Link>
           </h1>
         </>
       )}

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Icon } from "components/common/icons";
+import EmptyPosts from "components/common/empty-posts";
 
 import {
   setCurrentUserPostsThunk,
@@ -19,7 +20,6 @@ import {
   PostItem,
   InfoItem,
   ExtraInfo,
-  EmptyPosts,
 } from "./styles";
 
 const Content = ({ isAuthUserPage }) => {
@@ -102,7 +102,7 @@ const Content = ({ isAuthUserPage }) => {
               <PostItem key={index}>
                 <img src={post.image} alt="Post" />
               </PostItem>
-              <ExtraInfo onClick={() => navigate(`/${login}/p/${post.id}`)}>
+              <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
                 <InfoItem key={1}>
                   <Icon icon="filledHeartIcon" fill="#fff" />
                   <span>{post.likes.length}</span>
@@ -115,12 +115,7 @@ const Content = ({ isAuthUserPage }) => {
             </PostItemWrapper>
           ))}
       </Posts>
-      {!content.length && (
-        <EmptyPosts>
-          <Icon icon="cameraIcon" />
-          <p>No Posts Yet</p>
-        </EmptyPosts>
-      )}
+      <EmptyPosts contentLength={content.length} />
     </>
   );
 };

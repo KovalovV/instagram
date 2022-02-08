@@ -22,7 +22,7 @@ const NavBar = () => {
 
   const { avatar, login } = useSelector((state) => state.user.currentUser);
   const navigateIcons = ["home", "messenger", "plus", "explore", "heart"];
-  const routeIcons = ["home", "messenger", "create", "explore", "heart"];
+  const routeIcons = ["", "messenger", "create", "explore", "heart"];
 
   if (emptyPath.some((path) => path === location.pathname)) {
     return <span />;
@@ -32,7 +32,7 @@ const NavBar = () => {
     <StyledNav>
       <NavContainer>
         <Logo>
-          <Link to="/home">
+          <Link to="/">
             <img src={instagramLoginLogo} alt="Instagram Logo" />
           </Link>
         </Logo>
@@ -63,7 +63,7 @@ const NavBar = () => {
             </IconNavigate>
           ))}
           <UserPhoto>
-            <Link to={`/${login}`}>
+            <Link to={`/u/${login}`}>
               <img src={avatar} alt="Avatar" />
             </Link>
           </UserPhoto>

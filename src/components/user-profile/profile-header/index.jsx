@@ -1,8 +1,12 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-vars */
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { api } from "api";
+
+import Spinner from "components/common/spinner";
 
 import Button from "components/common/button";
 import { Icon } from "components/common/icons";
@@ -24,6 +28,8 @@ import {
 } from "./styles";
 
 const Header = ({ isAuthUserPage }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     id: selectedId,
     login: selectedLogin,
@@ -55,13 +61,15 @@ const Header = ({ isAuthUserPage }) => {
     currentFollowings.some((following) => following === selectedId);
 
   const handleFollow = async () => {
+    setIsLoading(true);
     if (isFollowing()) {
       await api.user.removeUserFollowing(currentId, selectedId);
     } else {
-      await api.user.setUserFollowing(currentId, selectedId);
+      await api.user.addUserFollowing(currentId, selectedId);
     }
     dispatch(setUpdatedUserThunk(currentId));
     dispatch(setSelectedUserProfileThunk(params.userLogin));
+    setIsLoading(false);
   };
 
   return (
@@ -99,7 +107,13 @@ const Header = ({ isAuthUserPage }) => {
                 border={isFollowing() ? "grey" : "none"}
                 onClick={handleFollow}
               >
-                {isFollowing() ? "Unfollow" : "Follow"}
+                {isLoading ? (
+                  <Spinner width="20px" height="20px" />
+                ) : isFollowing() ? (
+                  "Unfollow"
+                ) : (
+                  "Follow"
+                )}
               </Button>
             )}
           </Flex>
@@ -149,10 +163,18 @@ const Header = ({ isAuthUserPage }) => {
             <Button
               type="followProfile"
               size="small"
-              color="white"
-              bgColor="blue"
+              color={isFollowing() ? "grey" : "white"}
+              bgColor={isFollowing() ? "white" : "blue"}
+              border={isFollowing() ? "grey" : "none"}
+              onClick={handleFollow}
             >
-              Follow
+              {isLoading ? (
+                <Spinner width="20px" height="20px" />
+              ) : isFollowing() ? (
+                "Unfollow"
+              ) : (
+                "Follow"
+              )}
             </Button>
           )}
         </ProfileDescription>
