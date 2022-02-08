@@ -74,7 +74,7 @@ export const MobileImage = styled.div(
   ({ theme: { down } }) => css`
     display: none;
     width: 100%;
-    min-height: 280px;
+    min-height: 240px;
     max-height: 650px;
     background-color: #000;
 
@@ -91,7 +91,7 @@ export const MobileImage = styled.div(
 
     ${down(735)} {
       display: flex;
-      max-height: 280px;
+      max-height: 240px;
 
       img {
         width: auto;
@@ -148,5 +148,6 @@ export const ActionContainer = styled.div`
   flex-direction: column;
   border-top: 1px solid #dbdbdb;
   border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
   background-color: #fff;
 `;

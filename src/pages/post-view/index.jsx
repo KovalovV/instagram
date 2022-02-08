@@ -1,23 +1,22 @@
-import { useEffect, useCallback, useState, useRef } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import {
   setSelectedPostThunk,
   setSelectedPostCommentsThunk,
 } from "store/thunks/post";
 
+import Modal from "components/common/modal";
+
 import ShortUserInfo from "components/common/short-user-info";
 import PostActions from "components/common/post-actions";
 import UserComment from "components/common/user-comment";
 import AddComment from "components/common/add-comment";
-import Spinner from "components/common/spinner";
 
-import { Icon } from "components/common/icons";
 import Date from "components/common/date";
 
 import {
-  ModalWrapper,
   PostContainer,
   Image,
   MobileImage,
@@ -30,24 +29,11 @@ import {
 const PostView = () => {
   const params = useParams();
 
-  const navigate = useNavigate();
-  const modalWrap = useRef(null);
-
   const [isLoading, setIsLoading] = useState(true);
 
-  const { id: currentUserId } = useSelector((state) => state.user.currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
 
-  const { login, saved } = useSelector(
-    (state) => state.selectedUser.selectedUserProfile
-  );
-  const {
-    id: postId,
-    userID: userId,
-    image,
-    description,
-    likes,
-    timestamp: postTimestamp,
-  } = useSelector((state) => state.post.selectedPost);
+  const selectedPost = useSelector((state) => state.post.selectedPost);
   const comments = useSelector((state) => state.post.comments);
 
   const dispatch = useDispatch();
@@ -63,84 +49,59 @@ const PostView = () => {
     fetchPostData();
   }, [fetchPostData]);
 
-  const onClickClose = () => {
-    modalWrap.current.style.display = "none";
-    navigate(`/${login}`);
-    return false;
-  };
-
-  const onKeyDownClose = (key) => {
-    if (key.keyCode === 27) {
-      modalWrap.current.style.display = "none";
-      navigate(`/${login}`);
-    }
-    return false;
-  };
-
   return (
-    <ModalWrapper ref={modalWrap} onKeyDown={onKeyDownClose} tabIndex="0">
-      <Icon className="close" icon="closeModalIcon" onClick={onClickClose} />
-      {isLoading ? (
-        <Spinner width="100px" height="100px" />
-      ) : (
-        <PostContainer>
-          <Image>
+    <Modal isLoading={isLoading}>
+      <PostContainer>
+        <Image>
+          <div className="image-container">
+            <img src={selectedPost.image} alt="Post" />
+          </div>
+        </Image>
+        <Details>
+          <ShortUserInfo userId={selectedPost.userID} />
+          <MobileImage>
             <div className="image-container">
-              <img src={image} alt="Post" />
+              <img src={selectedPost.image} alt="Post" />
             </div>
-          </Image>
-          <Details>
-            <ShortUserInfo userId={userId} />
-            <MobileImage>
-              <div className="image-container">
-                <img src={image} alt="Post" />
-              </div>
-            </MobileImage>
-            <Comments>
-              <div className="description">
-                <UserComment
-                  userId={userId}
-                  description={description}
-                  postTimestamp={postTimestamp}
-                  // eslint-disable-next-line react/jsx-boolean-value
-                  withAvatar="false"
-                  withDate
-                />
-                {comments &&
-                  comments.map(
-                    ({
-                      id: commentId,
-                      content,
-                      timestamp: commentTimestamp,
-                      user: { id: authorId },
-                    }) => (
-                      <UserComment
-                        key={commentId}
-                        userId={authorId}
-                        description={content}
-                        postTimestamp={commentTimestamp}
-                        withAvatar
-                        withDate
-                      />
-                    )
-                  )}
-              </div>
-            </Comments>
-            <ActionContainer>
-              <PostActions
-                currentUserId={currentUserId}
-                saved={saved}
-                postId={postId}
-                likes={likes}
+          </MobileImage>
+          <Comments>
+            <div className="description">
+              <UserComment
+                userId={selectedPost.userID}
+                description={selectedPost.description}
+                postTimestamp={selectedPost.timestamp}
+                withAvatar
+                withDate
               />
-              <LikeInfo>{likes && likes.length} likes</LikeInfo>
-              <Date date={postTimestamp} uppercase marginLeft />
-              <AddComment postId={postId} />
-            </ActionContainer>
-          </Details>
-        </PostContainer>
-      )}
-    </ModalWrapper>
+              {comments &&
+                comments.map((comment) => (
+                  <UserComment
+                    key={comment.id}
+                    userId={comment.authorID}
+                    description={comment.content}
+                    postTimestamp={comment.timestamp}
+                    withAvatar
+                    withDate
+                  />
+                ))}
+            </div>
+          </Comments>
+          <ActionContainer>
+            <PostActions
+              currentUserId={currentUser.id}
+              saved={currentUser.saved}
+              postId={selectedPost.id}
+              likes={selectedPost.likes}
+            />
+            <LikeInfo>
+              {selectedPost.likes && selectedPost.likes.length} likes
+            </LikeInfo>
+            <Date date={selectedPost.timestamp} uppercase marginLeft />
+            <AddComment postId={selectedPost.id} />
+          </ActionContainer>
+        </Details>
+      </PostContainer>
+    </Modal>
   );
 };
 
