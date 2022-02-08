@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
 import { useEffect, useState } from "react";
 
@@ -5,7 +6,12 @@ import { useDispatch } from "react-redux";
 // import store from "store";
 import { setCurrentUserThunk } from "store/thunks/user";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,23 +48,26 @@ const App = () => {
 
   return (
     <ThemeProvider theme={getTheme()}>
-      <Router>
-        <GlobalStyles />
-        <ToastContainer />
-        <NavBar />
-        <Routes>
-          <Route path="/:userLogin/*" element={<UserProfile />}>
-            <Route path="p/:postId" element={<PostView />} />
-          </Route>
-          <Route path="/:accounts/edit" element={<EditProfile />} />
+      {/* <Router> */}
+      <GlobalStyles />
+      <ToastContainer />
+      <NavBar />
+      {/* <EditProfile /> */}
+      <Outlet />
+
+      {/* <Routes>
+      <Route path="/:userLogin/*" element={<UserProfile />}>
+          <Route path="p/:postId" element={<PostView />} />
+        </Route>
+      <Route path="/:accounts/edit" element={<EditProfile />} />
           <Route path="/home" element={<Home />} />
           <Route path="/create/:postingStep" element={<Posting />} />
           <Route path="/:userLogin/p/:postId" element={<PostView />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-        </Routes>
-      </Router>
+      </Routes> */}
+      {/* </Router> */}
     </ThemeProvider>
   );
 };
