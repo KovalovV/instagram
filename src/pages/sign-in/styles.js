@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { flex } from "utils/flex";
 
 export const SignContainer = styled.div`
   display: flex;
@@ -40,21 +39,6 @@ export const Card = styled.div(
   `
 );
 
-export const SignUpInCard = styled(Card)`
-  text-align: center;
-
-  p {
-    font-size: 14px;
-  }
-
-  a {
-    font-size: 14px;
-    font-weight: 600;
-    color: #0095f6;
-    text-decoration: none;
-  }
-`;
-
 export const SignMain = styled.main(
   ({ theme: { up, breakpoints } }) => css`
     max-width: 350px;
@@ -64,28 +48,3 @@ export const SignMain = styled.main(
     }
   `
 );
-
-export const GetApp = styled.div`
-  width: 100%;
-  padding: 20px 0px;
-  text-align: center;
-
-  p {
-    margin: 10px 20px;
-    font-size: 14px;
-  }
-
-  a {
-    margin: 10px 5px;
-    flex-basis: 40%;
-  }
-
-  img {
-    width: 100%;
-  }
-
-  .install-store {
-    ${flex.justifyCenter}
-    margin: 5px 0;
-  }
-`;

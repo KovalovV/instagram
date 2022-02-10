@@ -1,13 +1,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { api } from "api";
 
 import { setUpdatedUserThunk } from "store/thunks/user";
-
-import { toast } from "react-toastify";
 
 import Spinner from "components/common/spinner";
 import Input from "components/common/input";

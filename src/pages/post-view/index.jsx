@@ -58,7 +58,11 @@ const PostView = () => {
           </div>
         </Image>
         <Details>
-          <ShortUserInfo userId={selectedPost.userID} />
+          <ShortUserInfo
+            userId={selectedPost.userID}
+            width="32px"
+            height="32px"
+          />
           <MobileImage>
             <div className="image-container">
               <img src={selectedPost.image} alt="Post" />
