@@ -2,6 +2,28 @@ import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
 import { sizes, colors, borders } from "./config";
 
+const userStatsStyles = css`
+  display: inline-block;
+  font-size: 14px;
+  line-height: 18px;
+  margin-right: 40px;
+
+  &:last-of-type {
+    margin-right: 0px;
+  }
+`;
+
+const userStatsMobileStyles = css`
+  display: inline-block;
+  font-size: 14px;
+  line-height: 18px;
+  margin-right: 40px;
+
+  &:last-of-type {
+    margin-right: 0px;
+  }
+`;
+
 const submitEditStyles = css`
   padding: 5px 9px;
   border-radius: 5px;
@@ -47,6 +69,8 @@ const buttonStyles = {
   editProfile: editProfileStyles,
   submitEdit: submitEditStyles,
   followProfile: followProfileStyles,
+  userStats: userStatsStyles,
+  userStatsMobile: userStatsMobileStyles,
 };
 
 const getButtonStyleByType = (type) => buttonStyles[type] || initialStyles;

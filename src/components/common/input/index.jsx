@@ -46,6 +46,7 @@ const Input = ({
         bgColor={bgColor}
         placeholder={placeholder}
         onChange={onChange}
+        value={value}
         id={id}
       />
       <StyledButton
