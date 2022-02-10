@@ -13,6 +13,7 @@ import { ReactComponent as MessengerIcon } from "assets/icons/messengerIcon.svg"
 import { ReactComponent as OptionsIcon } from "assets/icons/optionsIcon.svg";
 import { ReactComponent as PlusIcon } from "assets/icons/plusIcon.svg";
 import { ReactComponent as PostsIcon } from "assets/icons/postsIcon.svg";
+import { ReactComponent as PeopleIcon } from "assets/icons/peopleIcon.svg";
 import { ReactComponent as SavedIcon } from "assets/icons/savedIcon.svg";
 import { ReactComponent as SearchIcon } from "assets/icons/searchIcon.svg";
 import { ReactComponent as MediaIcon } from "assets/icons/mediaIcon.svg";
@@ -53,6 +54,8 @@ const getIcon = (iconName) => {
       return <OptionsIcon />;
     case "postsIcon":
       return <PostsIcon />;
+    case "peopleIcon":
+      return <PeopleIcon />;
     case "savedIcon":
       return <SavedIcon />;
     case "searchIcon":
