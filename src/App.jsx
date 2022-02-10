@@ -28,6 +28,7 @@ import UserProfile from "pages/user-profile";
 import EditProfile from "pages/edit-profile";
 import Posting from "pages/create-post";
 import PostView from "pages/post-view";
+import NotFound from "pages/not-found";
 
 import LoaderScreen from "components/common/loader-screen";
 
@@ -44,30 +45,31 @@ const App = () => {
     });
   }, [dispatch]);
 
-  if (isAuthLoading) return <LoaderScreen />;
+  if (isAuthLoading) {
+    return <LoaderScreen />;
+  }
 
   return (
     <ThemeProvider theme={getTheme()}>
-      {/* <Router> */}
-      <GlobalStyles />
-      <ToastContainer />
-      <NavBar />
-      {/* <EditProfile /> */}
-      <Outlet />
-
-      {/* <Routes>
-      <Route path="/:userLogin/*" element={<UserProfile />}>
-          <Route path="p/:postId" element={<PostView />} />
-        </Route>
-      <Route path="/:accounts/edit" element={<EditProfile />} />
-          <Route path="/home" element={<Home />} />
+      <Router>
+        <GlobalStyles />
+        <ToastContainer />
+        <NavBar />
+        {/* <Outlet /> */}
+        <Routes>
+          {/* <Route path="/" element={<Home />}> */}
+          <Route path="/" element={<Home />} />
+          <Route path="/u/:userLogin" element={<UserProfile />} />
+          <Route path="/:accounts/edit" element={<EditProfile />} />
           <Route path="/create/:postingStep" element={<Posting />} />
-          <Route path="/:userLogin/p/:postId" element={<PostView />} />
+          <Route path="/p/:postId" element={<PostView />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-      </Routes> */}
-      {/* </Router> */}
+          <Route path="/*" element={<NotFound />} />
+          {/* </Route> */}
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 };

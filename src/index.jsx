@@ -23,7 +23,7 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <Router>
+      {/* <Router>
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="" element={<Home />} />
@@ -37,7 +37,8 @@ ReactDOM.render(
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
-      </Router>
+      </Router> */}
+      <App />
     </React.StrictMode>
   </Provider>,
   document.getElementById("root")
