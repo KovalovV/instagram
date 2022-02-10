@@ -91,69 +91,6 @@ export const ProfileLogin = styled.section(
   `
 );
 
-export const ProfileMobileStats = styled.ul(
-  ({ theme: { down } }) => css`
-    display: none;
-    width: 100%;
-    margin-bottom: 0px;
-    border-top: 1px solid #dbdbdb;
-    justify-content: space-around;
-    padding: 12px 0;
-
-    li {
-      display: inline-block;
-      font-size: 14px;
-      color: #8e8e8e;
-      text-align: center;
-      margin-right: 0px;
-      flex-basis: 33.4%;
-    }
-
-    li:last-of-type {
-      margin-right: 0px;
-    }
-
-    span {
-      display: block;
-      font-size: 16px;
-      color: #262626;
-      font-weight: 600;
-      line-height: 1.5;
-    }
-
-    ${down(735)} {
-      display: flex;
-    }
-  `
-);
-
-export const ProfileStats = styled.ul(
-  ({ theme: { up } }) => css`
-    display: none;
-    width: 70%;
-    margin-bottom: 20px;
-    margin-top: 15px;
-
-    li {
-      display: inline-block;
-      font-size: 16px;
-      margin-right: 40px;
-    }
-
-    li:last-of-type {
-      margin-right: 0px;
-    }
-
-    span {
-      font-weight: 600;
-    }
-
-    ${up(735)} {
-      display: flex;
-    }
-  `
-);
-
 export const ProfileMobileAbout = styled.div(
   ({ theme: { down } }) => css`
     display: none;

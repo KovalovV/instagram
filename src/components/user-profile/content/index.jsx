@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -26,7 +25,7 @@ const Content = ({ isAuthUserPage }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { id, login, saved } = useSelector((state) =>
+  const { id: userId, saved: userSaved } = useSelector((state) =>
     isAuthUserPage
       ? state.user.currentUser
       : state.selectedUser.selectedUserProfile
@@ -41,9 +40,9 @@ const Content = ({ isAuthUserPage }) => {
   }, [posts]);
 
   useEffect(() => {
-    dispatch(setCurrentUserPostsThunk(id));
-    dispatch(setCurrentUserSavedPostsThunk(saved));
-  }, [dispatch, id, saved]);
+    dispatch(setCurrentUserPostsThunk(userId));
+    dispatch(setCurrentUserSavedPostsThunk(userSaved));
+  }, [dispatch, userId, userSaved]);
 
   const onClickPosts = (e) => {
     setActiveType(`${e.target.id}`);
@@ -99,15 +98,15 @@ const Content = ({ isAuthUserPage }) => {
         {Boolean(content.length) &&
           content.map((post, index) => (
             <PostItemWrapper key={`${post.id}`}>
-              <PostItem key={index}>
+              <PostItem key={`${post.id}-${index}`}>
                 <img src={post.image} alt="Post" />
               </PostItem>
               <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
-                <InfoItem key={1}>
+                <InfoItem key={`${post.id}-1`}>
                   <Icon icon="filledHeartIcon" fill="#fff" />
                   <span>{post.likes.length}</span>
                 </InfoItem>
-                <InfoItem key={41}>
+                <InfoItem key={`${post.id}-41`}>
                   <Icon icon="commentIcon" fill="#fff" />
                   <span>{post.comments.length}</span>
                 </InfoItem>

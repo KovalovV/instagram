@@ -1,18 +1,21 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { api } from "api";
 
-import Spinner from "components/common/spinner";
-
 import Button from "components/common/button";
 import { Icon } from "components/common/icons";
 
 import { setUpdatedUserThunk } from "store/thunks/user";
 import { setSelectedUserProfileThunk } from "store/thunks/selectedUser";
+
+import ProfileStats from "./profile-stats";
+
+import FollowModal from "./follow-modal";
+import FollowButton from "./follow-button";
 
 import {
   Flex,
@@ -21,14 +24,15 @@ import {
   ProfileAvatar,
   ProfileDescription,
   ProfileLogin,
-  ProfileStats,
-  ProfileMobileStats,
   ProfileAbout,
   ProfileMobileAbout,
 } from "./styles";
 
 const Header = ({ isAuthUserPage }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [modal, setModal] = useState({
+    show: false,
+    modalType: "followers",
+  });
 
   const {
     id: selectedId,
@@ -39,7 +43,6 @@ const Header = ({ isAuthUserPage }) => {
     avatar: selectedAvatar,
     followers: selectedFollowers,
     following: selectedFollowing,
-    posts: selectedPosts,
   } = useSelector((state) =>
     isAuthUserPage
       ? state.user.currentUser
@@ -50,26 +53,35 @@ const Header = ({ isAuthUserPage }) => {
     (state) => state.user.currentUser
   );
 
-  const stats = [selectedPosts, selectedFollowers, selectedFollowing];
-  const statsName = ["posts", "followers", "following"];
-
   const dispatch = useDispatch();
   const params = useParams();
 
-  const isFollowing = () =>
-    currentFollowings &&
-    currentFollowings.some((following) => following === selectedId);
+  const handleModal = (typeModal) => {
+    setModal((prevState) => ({
+      ...prevState,
+      show: true,
+      modalType: typeModal,
+    }));
+  };
 
-  const handleFollow = async () => {
-    setIsLoading(true);
-    if (isFollowing()) {
-      await api.user.removeUserFollowing(currentId, selectedId);
+  const onCloseModal = () =>
+    setModal((prevState) => ({
+      ...prevState,
+      show: false,
+    }));
+
+  const isFollowing = (followingId) =>
+    currentFollowings &&
+    currentFollowings.some((following) => following === followingId);
+
+  const handleFollow = async (followingId) => {
+    if (isFollowing(followingId)) {
+      await api.user.removeUserFollowing(currentId, followingId);
     } else {
-      await api.user.addUserFollowing(currentId, selectedId);
+      await api.user.addUserFollowing(currentId, followingId);
     }
     dispatch(setUpdatedUserThunk(currentId));
     dispatch(setSelectedUserProfileThunk(params.userLogin));
-    setIsLoading(false);
   };
 
   return (
@@ -99,36 +111,18 @@ const Header = ({ isAuthUserPage }) => {
                 </Link>
               </>
             ) : (
-              <Button
-                type="followProfile"
+              <FollowButton
                 size="small"
-                color={isFollowing() ? "grey" : "white"}
-                bgColor={isFollowing() ? "white" : "blue"}
-                border={isFollowing() ? "grey" : "none"}
-                onClick={handleFollow}
-              >
-                {isLoading ? (
-                  <Spinner width="20px" height="20px" />
-                ) : isFollowing() ? (
-                  "Unfollow"
-                ) : (
-                  "Follow"
-                )}
-              </Button>
+                isFollowing={isFollowing(selectedId)}
+                handleFollow={() => handleFollow(selectedId)}
+              />
             )}
           </Flex>
-          <ProfileStats>
-            {stats.map((stat, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <li key={`${stat}${index}`}>
-                {stat && (
-                  <>
-                    <span>{stat.length} </span> {statsName[index]}
-                  </>
-                )}
-              </li>
-            ))}
-          </ProfileStats>
+          <ProfileStats
+            isAuthUserPage={isAuthUserPage}
+            type="desktop"
+            handleModal={handleModal}
+          />
           <ProfileAbout>
             <h1>{selectedName}</h1>
             <span>{selectedBio}</span>
@@ -136,7 +130,7 @@ const Header = ({ isAuthUserPage }) => {
           </ProfileAbout>
         </ProfileDescription>
       </ProfileHeader>
-      {/* mobile */}
+
       <ProfileMobileHeader>
         <ProfileAvatar>
           <img src={selectedAvatar} alt="User Avatar" />
@@ -160,22 +154,11 @@ const Header = ({ isAuthUserPage }) => {
               </Button>
             </Link>
           ) : (
-            <Button
-              type="followProfile"
-              size="small"
-              color={isFollowing() ? "grey" : "white"}
-              bgColor={isFollowing() ? "white" : "blue"}
-              border={isFollowing() ? "grey" : "none"}
-              onClick={handleFollow}
-            >
-              {isLoading ? (
-                <Spinner width="20px" height="20px" />
-              ) : isFollowing() ? (
-                "Unfollow"
-              ) : (
-                "Follow"
-              )}
-            </Button>
+            <FollowButton
+              size="large"
+              isFollowing={isFollowing(selectedId)}
+              handleFollow={() => handleFollow(selectedId)}
+            />
           )}
         </ProfileDescription>
       </ProfileMobileHeader>
@@ -184,18 +167,18 @@ const Header = ({ isAuthUserPage }) => {
         <span>{selectedBio}</span>
         <a href={selectedWebsite}>{selectedWebsite}</a>
       </ProfileMobileAbout>
-      <ProfileMobileStats>
-        {stats.map((stat, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <li key={`${stat}${index}`}>
-            {stat && (
-              <>
-                <span>{stat.length} </span> {statsName[index]}
-              </>
-            )}
-          </li>
-        ))}
-      </ProfileMobileStats>
+      <ProfileStats
+        isAuthUserPage={isAuthUserPage}
+        type="mobile"
+        handleModal={handleModal}
+      />
+      <FollowModal
+        modal={modal}
+        content={{ selectedFollowers, selectedFollowing }}
+        onClose={onCloseModal}
+        isFollowing={isFollowing}
+        handleFollow={handleFollow}
+      />
     </>
   );
 };
