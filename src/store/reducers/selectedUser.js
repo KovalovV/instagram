@@ -11,11 +11,6 @@ const selectedUserReducer = (state = initialState, { type, payload } = {}) => {
         selectedUserProfile: payload,
         isSelectedUserLoading: false,
       };
-    //   case "LOG_OUT_USER":
-    //     return {
-    //       ...state,
-    //       selectedUserProfile: {},
-    //     };
     case "IS_SELECTED_USER_LOADING":
       return {
         ...state,

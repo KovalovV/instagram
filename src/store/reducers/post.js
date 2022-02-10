@@ -1,7 +1,6 @@
 const initialState = {
   posts: [],
   saved: [],
-  // comments: [],
   selectedPost: {},
   isPostLoading: true,
 };

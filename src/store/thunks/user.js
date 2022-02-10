@@ -5,15 +5,20 @@ import { toast } from "react-toastify";
 
 export const setCurrentUserThunk = () => async (dispatch) => {
   const auth = getAuth();
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const authUserData = await api.user.getUserById(user.uid);
-      const res = authUserData.data();
-      dispatch(setCurrentUser(res));
-    } else {
-      toast.error("User not exist");
-    }
-  });
+  try {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const authUserData = await api.user.getUserById(user.uid);
+        const res = authUserData.data();
+        dispatch(setCurrentUser(res));
+      } else {
+        toast.error("User not exist");
+      }
+    });
+    return true;
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
 export const googleAuthThunk = () => async (dispatch) => {
