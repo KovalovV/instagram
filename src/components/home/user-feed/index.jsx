@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 
@@ -10,9 +11,12 @@ import AddComment from "components/common/add-comment";
 
 import EmptyPosts from "components/common/empty-posts";
 
-import Spinner from "components/common/spinner";
-
 import Date from "components/common/date";
+
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Skeleton from "@mui/material/Skeleton";
 
 import { StyledUserFeed, Post, Image, LikeInfo } from "./styles";
 
@@ -43,30 +47,43 @@ const UserFeed = () => {
 
   const fetchPostData = useCallback(async () => {
     setIsLoading(true);
-    const posts = await api.user.getUserFeed(id);
+    const posts = id ? await api.user.getUserFeed(id) : [];
     setFeed(posts);
     setIsLoading(false);
   }, [id]);
 
   useEffect(() => {
     const componentMounted = new AbortController();
-
     fetchPostData();
-
     return () => componentMounted.abort();
   }, [fetchPostData]);
 
   return isLoading ? (
     <StyledUserFeed>
-      <Spinner with="100px" height="100px" />
+      <Post>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ margin: 1 }}>
+            <Skeleton variant="circular">
+              <Avatar />
+            </Skeleton>
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <Skeleton width="150px">
+              <Typography>.</Typography>
+            </Skeleton>
+          </Box>
+        </Box>
+        <Skeleton variant="rectangular" width="100%">
+          <div style={{ paddingTop: "100%" }} />
+        </Skeleton>
+      </Post>
     </StyledUserFeed>
   ) : (
     <StyledUserFeed>
-      {feed && feed.length ? (
+      {feed &&
         feed.map((post, index) => (
-          // eslint-disable-next-line react/no-array-index-key
           <Post key={`${post.id}-${index}`}>
-            <ShortUserInfo userId={post.userID} />
+            <ShortUserInfo userId={post.userID} width="32px" height="32px" />
             <Image>
               <img src={post.image} alt="Post" />
             </Image>
@@ -82,10 +99,8 @@ const UserFeed = () => {
             <Date date={post.timestamp} marginLeft />
             <AddComment postId={post.id} />
           </Post>
-        ))
-      ) : (
-        <EmptyPosts contentLength={feed.length} />
-      )}
+        ))}
+      <EmptyPosts contentLength={feed.length} />
     </StyledUserFeed>
   );
 };

@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import UserSuggestions from "./user-suggestions";
+import ShortUserInfo from "components/common/short-user-info";
+import UserSuggestions from "components/common/user-suggestions";
 
 import {
   AsideContainer,
@@ -12,9 +12,7 @@ import {
 } from "./styles";
 
 const Aside = () => {
-  const { avatar, name, login } = useSelector(
-    (state) => state.user.currentUser
-  );
+  const { id } = useSelector((state) => state.user.currentUser);
 
   const helpUserCategory = [
     "About",
@@ -35,23 +33,14 @@ const Aside = () => {
     <AsideContainer>
       <AsideFeed>
         <HeaderDetails>
-          <Link to={`/u/${login}`}>
-            <img src={avatar} alt="Avatar" />
-          </Link>
-          <div>
-            <h1>
-              <Link to={`/u/${login}`}>{login}</Link>
-            </h1>
-            <p>{name}</p>
-          </div>
+          <ShortUserInfo userId={id} width="56px" height="56px" withName />
         </HeaderDetails>
-        <UserSuggestions />
+        <UserSuggestions width="32px" height="32px" type="grey" />
         <HelpList>
           {helpUserCategory.map((category) => (
             <li key={category}>{category}</li>
           ))}
         </HelpList>
-
         <AsideFooter>© 2022 Instagram from Vitala Kovalov</AsideFooter>
       </AsideFeed>
     </AsideContainer>
