@@ -2,14 +2,14 @@ import { useLocation, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import instagramLoginLogo from "assets/images/instagramLoginLogo.png";
-import Input from "components/common/input";
 import { Icon } from "components/common/icons";
+
+import SearchUser from "./search-user";
 
 import {
   StyledNav,
   NavContainer,
   Logo,
-  SearchWrapper,
   IconNavigateWrapper,
   IconNavigate,
   UserPhoto,
@@ -36,18 +36,7 @@ const NavBar = () => {
             <img src={instagramLoginLogo} alt="Instagram Logo" />
           </Link>
         </Logo>
-        <SearchWrapper>
-          <Input
-            type="textSearch"
-            border="none"
-            bgColor="mostDarkGrey"
-            id="search"
-            placeholder="Search"
-            // value={password}
-            // onChange={onChange}
-            // onClick={isVisible}
-          />
-        </SearchWrapper>
+        <SearchUser />
         <IconNavigateWrapper>
           {navigateIcons.map((name, index) => (
             <IconNavigate key={`${name}`}>

@@ -32,19 +32,6 @@ export const Logo = styled.div`
   }
 `;
 
-export const SearchWrapper = styled.div(
-  ({ theme: { up } }) => css`
-    display: none;
-
-    ${up(645)} {
-      display: block;
-      min-width: 125px;
-      width: 268px;
-      height: 100%;
-    }
-  `
-);
-
 export const IconNavigateWrapper = styled.div`
   display: flex;
   padding-left: 24px;
