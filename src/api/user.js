@@ -26,6 +26,22 @@ import { db } from "firebase.config";
 
 import { toast } from "react-toastify";
 
+export const searchUserByLogin = async (login) => {
+  const collectionRef = collection(db, "users");
+
+  const querySet = query(
+    collectionRef,
+    where("login", ">=", login),
+    where("login", "<=", `${login}\uf8ff`)
+  );
+  const querySnap = await getDocs(querySet);
+
+  const users = [];
+  querySnap.forEach((document) => users.push(document.data()));
+
+  return users;
+};
+
 export const getUserByLogin = async (login) => {
   const collectionRef = collection(db, "users");
 
@@ -39,10 +55,14 @@ export const getUserByLogin = async (login) => {
 };
 
 export const getUserById = async (id) => {
-  console.log("user id", id);
-  const userRef = doc(db, "users", id);
-  const userSnap = await getDoc(userRef);
-  return userSnap;
+  try {
+    const userRef = doc(db, "users", id);
+    const userSnap = await getDoc(userRef);
+
+    return userSnap;
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
 export const setUser = async (formData, id) => {
@@ -211,12 +231,7 @@ export const getUserFeed = async (userId) => {
 export const getLastUsers = async (currentUserId) => {
   const usersRef = collection(db, "users");
 
-  const querySet = query(
-    usersRef,
-    where("id", "!=", currentUserId),
-    orderBy("id", "timestamp", "desc"),
-    limit(5)
-  );
+  const querySet = query(usersRef, where("id", "!=", currentUserId), limit(5));
   const querySnap = await getDocs(querySet);
 
   const lastUsers = [];
