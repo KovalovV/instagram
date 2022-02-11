@@ -19,6 +19,15 @@ export const LikeInfo = styled.div`
   font-weight: 600;
 `;
 
+export const AllComments = styled.div`
+  color: #8e8e8e;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 0px 16px;
+  margin-top: 4px;
+`;
+
 export const Post = styled.div(
   ({ theme: { up, breakpoints } }) => css`
     max-width: 614px;

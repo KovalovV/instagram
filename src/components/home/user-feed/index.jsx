@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { api } from "api";
@@ -18,7 +19,7 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Skeleton from "@mui/material/Skeleton";
 
-import { StyledUserFeed, Post, Image, LikeInfo } from "./styles";
+import { StyledUserFeed, Post, Image, LikeInfo, AllComments } from "./styles";
 
 const UserFeed = () => {
   const [feed, setFeed] = useState(null);
@@ -96,6 +97,11 @@ const UserFeed = () => {
             />
             <LikeInfo>{post.likes && post.likes.length} likes</LikeInfo>
             <UserComment userId={post.userID} description={post.description} />
+            <AllComments>
+              <Link to={`/p/${post.id}`}>
+                View all {post.comments.length} comments
+              </Link>
+            </AllComments>
             <Date date={post.timestamp} marginLeft />
             <AddComment postId={post.id} />
           </Post>
