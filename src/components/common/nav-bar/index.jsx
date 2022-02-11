@@ -1,10 +1,10 @@
 import { useLocation, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import instagramLoginLogo from "assets/images/instagramLoginLogo.png";
 import { Icon } from "components/common/icons";
 
 import SearchUser from "./search-user";
+import UserPhoto from "./user-photo";
 
 import {
   StyledNav,
@@ -12,7 +12,6 @@ import {
   Logo,
   IconNavigateWrapper,
   IconNavigate,
-  UserPhoto,
 } from "./styles";
 
 const NavBar = () => {
@@ -20,7 +19,6 @@ const NavBar = () => {
 
   const emptyPath = ["/sign-up", "/sign-in", "/forgot-password"];
 
-  const { avatar, login } = useSelector((state) => state.user.currentUser);
   const navigateIcons = ["home", "messenger", "plus", "explore", "heart"];
   const routeIcons = ["", "messenger", "create", "explore", "heart"];
 
@@ -51,11 +49,7 @@ const NavBar = () => {
               )}
             </IconNavigate>
           ))}
-          <UserPhoto>
-            <Link to={`/u/${login}`}>
-              <img src={avatar} alt="Avatar" />
-            </Link>
-          </UserPhoto>
+          <UserPhoto />
         </IconNavigateWrapper>
       </NavContainer>
     </StyledNav>

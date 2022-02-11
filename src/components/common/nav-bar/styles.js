@@ -50,19 +50,3 @@ export const IconNavigate = styled.div(
     }
   `
 );
-
-export const UserPhoto = styled.div`
-  img {
-    width: 24px;
-    height: 24px;
-    overflow: hidden;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 1px solid #262626;
-
-    /* ${({ avatar }) => css`
-      background: url(${avatar}) no-repeat center top fixed;
-      background-size: 100% 100%;
-    `} */
-  }
-`;
