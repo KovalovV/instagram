@@ -45,6 +45,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont,"Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	line-height: 1;
     background-color: #fafafa;
+    scrollbar-width: none;
 }
 
 ol, ul {
@@ -132,6 +133,7 @@ a:hover {
 }
 
 img {
+    color: transparent;
     border: 0; /* 1 */
     -ms-interpolation-mode: bicubic; /* 2 */
 }
