@@ -134,6 +134,16 @@ export const signUpUser = async (formData) => {
   return userCredential;
 };
 
+export const signOutUser = () => {
+  try {
+    const auth = getAuth();
+    auth.signOut();
+    return 1;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 export const updateProfileInfo = async (editedProfileInfo) => {
   try {
     const userRef = doc(db, "users", editedProfileInfo.id);

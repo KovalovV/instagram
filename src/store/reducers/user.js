@@ -17,19 +17,18 @@ const userReducer = (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         currentUser: payload,
-        authed: true,
-        isUserLoading: false,
       };
     case "IS_USER_LOADING":
       return {
         ...state,
         isUserLoading: payload,
       };
-    case "LOG_OUT_USER":
+    case "SIGN_OUT_USER":
       return {
         ...state,
         currentUser: {},
         authed: false,
+        isUserLoading: true,
       };
     default:
       return { ...state };

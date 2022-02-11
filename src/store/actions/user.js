@@ -8,11 +8,11 @@ export const setUpdatedUser = (updatedUserData) => ({
   payload: updatedUserData,
 });
 
-//   export const setIsUserLoading: (state, { payload }) => {
-//     isUserLoading = payload;
-//   };
+export const setIsUserLoading = (isLoading) => ({
+  type: "IS_USER_LOADING",
+  payload: isLoading,
+});
 
-//   export const logOutUser: (state) => {
-//     currentUser = {};
-//     authed = false;
-//   };
+export const signOutUser = () => ({
+  type: "SIGN_OUT_USER",
+});

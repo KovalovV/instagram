@@ -1,24 +1,23 @@
 import { api } from "api";
-import { setCurrentUser, setUpdatedUser } from "store/actions/user";
+import {
+  setCurrentUser,
+  setUpdatedUser,
+  setIsUserLoading,
+  signOutUser,
+} from "store/actions/user";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { toast } from "react-toastify";
 
 export const setCurrentUserThunk = () => async (dispatch) => {
   const auth = getAuth();
-  try {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const authUserData = await api.user.getUserById(user.uid);
-        const res = authUserData.data();
-        dispatch(setCurrentUser(res));
-      } else {
-        toast.error("User not exist");
-      }
-    });
-    return true;
-  } catch (error) {
-    return Promise.reject(error);
-  }
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const authUserData = await api.user.getUserById(user.uid);
+      const res = authUserData.data();
+      dispatch(setCurrentUser(res));
+    } else {
+      dispatch(setIsUserLoading(false));
+    }
+  });
 };
 
 export const googleAuthThunk = () => async (dispatch) => {
@@ -62,6 +61,11 @@ export const signUpUserThunk = (userData) => async (dispatch) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+export const signOutUserThunk = () => async (dispatch) => {
+  await api.user.signOutUser();
+  dispatch(signOutUser());
 };
 
 export const setUpdatedUserThunk = (userId) => async (dispatch) => {
