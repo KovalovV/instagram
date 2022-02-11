@@ -35,7 +35,12 @@ const Aside = () => {
         <HeaderDetails>
           <ShortUserInfo userId={id} width="56px" height="56px" withName />
         </HeaderDetails>
-        <UserSuggestions width="32px" height="32px" type="grey" />
+        <UserSuggestions
+          width="32px"
+          height="32px"
+          type="grey"
+          altitude="48px"
+        />
         <HelpList>
           {helpUserCategory.map((category) => (
             <li key={category}>{category}</li>

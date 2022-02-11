@@ -2,10 +2,10 @@ import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
 
 export const HeaderDetails = styled.div(
-  ({ width, height }) => css`
+  ({ width, height, altitude }) => css`
     ${flex.alignCenter}
     width: 100%;
-    height: 60px;
+    height: ${altitude || "60px"};
     padding: 15px;
 
     img {

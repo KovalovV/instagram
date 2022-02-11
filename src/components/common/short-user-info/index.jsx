@@ -10,7 +10,7 @@ import { api } from "api";
 
 import { HeaderDetails } from "./styles";
 
-const ShortUserInfo = ({ userId, width, height, withName }) => {
+const ShortUserInfo = ({ userId, width, height, withName, altitude }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
@@ -25,7 +25,7 @@ const ShortUserInfo = ({ userId, width, height, withName }) => {
   }, [userId]);
 
   return (
-    <HeaderDetails width={width} height={height}>
+    <HeaderDetails width={width} height={height} altitude={altitude}>
       {isLoading ? (
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Box sx={{ margin: 1 }}>

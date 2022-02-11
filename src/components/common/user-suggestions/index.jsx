@@ -10,7 +10,7 @@ import ShortUserInfo from "components/common/short-user-info";
 
 import { SuggestionsContainer, SuggestionsText } from "./styles";
 
-const UserSuggestions = ({ width, height, type }) => {
+const UserSuggestions = ({ width, height, type, altitude }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [lastUsers, setLastUser] = useState(null);
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -35,7 +35,7 @@ const UserSuggestions = ({ width, height, type }) => {
             animation="pulse"
             variant="rectangular"
             width="293px"
-            height="300px"
+            height="240px"
           />
         </Box>
       ) : (
@@ -47,6 +47,7 @@ const UserSuggestions = ({ width, height, type }) => {
             width={width}
             height={height}
             withName
+            altitude={altitude}
           />
         ))
       )}
