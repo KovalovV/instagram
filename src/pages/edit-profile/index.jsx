@@ -98,6 +98,7 @@ const EditProfile = () => {
   ]);
 
   const handleImage = async (e) => {
+    console.log("handleImage");
     const [photoObj] = e.target.files;
 
     setNewAvatar(photoObj);
@@ -145,11 +146,11 @@ const EditProfile = () => {
           <img src={previewAvatar || userProfileData.avatar} alt="Avatar" />
           <div className="change-avatar">
             <h1>{currentLogin}</h1>
-            <label htmlFor="avatar">Change Profile Photo</label>
+            <label htmlFor="change-avatar">Change Profile Photo</label>
             <input
               type="file"
-              id="avatar"
-              name="avatar"
+              id="change-avatar"
+              name="change-avatar"
               max="1"
               accept=".jpg,.png,.jpeg"
               onChange={handleImage}
