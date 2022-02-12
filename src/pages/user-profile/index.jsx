@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Outlet } from "react-router-dom";
+import { useParams, Outlet, useNavigate } from "react-router-dom";
+
+import { toast } from "react-toastify";
 
 import Header from "components/user-profile/profile-header";
 import Content from "components/user-profile/content";
@@ -21,14 +23,20 @@ const UserProfile = () => {
 
   const isAuthUserPage = currentUserId === selectedUserId;
 
+  const navigate = useNavigate();
   const params = useParams();
 
   const dispatch = useDispatch();
 
   const fetchPostData = useCallback(async () => {
-    setIsLoading(true);
-    await dispatch(setSelectedUserProfileThunk(params.userLogin));
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await dispatch(setSelectedUserProfileThunk(params.userLogin));
+      setIsLoading(false);
+    } catch (error) {
+      navigate("/*");
+      toast.error(error.messenge);
+    }
   }, [params.userLogin]);
 
   useEffect(() => {

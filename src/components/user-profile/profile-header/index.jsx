@@ -165,7 +165,13 @@ const Header = ({ isAuthUserPage }) => {
       <ProfileMobileAbout>
         <h1>{selectedName}</h1>
         <span>{selectedBio}</span>
-        <a href={selectedWebsite}>{selectedWebsite}</a>
+        <Link
+          to={`http://${selectedWebsite}`}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {selectedWebsite}
+        </Link>
       </ProfileMobileAbout>
       <ProfileStats
         isAuthUserPage={isAuthUserPage}

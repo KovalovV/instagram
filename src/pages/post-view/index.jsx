@@ -8,6 +8,10 @@ import {
 } from "store/thunks/post";
 
 import Modal from "components/common/modal";
+import { Icon } from "components/common/icons";
+import Button from "components/common/button";
+
+import MoreOptionsModal from "components/post-view/more-options-modal";
 
 import ShortUserInfo from "components/common/short-user-info";
 import PostActions from "components/common/post-actions";
@@ -16,7 +20,10 @@ import AddComment from "components/common/add-comment";
 
 import Date from "components/common/date";
 
+// import { api } from "api";
+
 import {
+  Flex,
   PostContainer,
   Image,
   MobileImage,
@@ -29,6 +36,10 @@ import {
 const PostView = () => {
   const params = useParams();
 
+  const [modal, setModal] = useState({
+    show: false,
+    modalType: "followers",
+  });
   const [isLoading, setIsLoading] = useState(true);
 
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -37,6 +48,20 @@ const PostView = () => {
   const comments = useSelector((state) => state.post.comments);
 
   const dispatch = useDispatch();
+
+  const handleModal = (typeModal) => {
+    setModal((prevState) => ({
+      ...prevState,
+      show: true,
+      modalType: typeModal,
+    }));
+  };
+
+  const onCloseModal = () =>
+    setModal((prevState) => ({
+      ...prevState,
+      show: false,
+    }));
 
   const fetchPostData = useCallback(async () => {
     setIsLoading(true);
@@ -58,11 +83,22 @@ const PostView = () => {
           </div>
         </Image>
         <Details>
-          <ShortUserInfo
-            userId={selectedPost.userID}
-            width="32px"
-            height="32px"
-          />
+          <Flex>
+            <ShortUserInfo
+              userId={selectedPost.userID}
+              width="32px"
+              height="32px"
+            />
+            <Button
+              type="moreOptions"
+              color="dark"
+              bgColor="transparent"
+              size="default"
+              onClick={handleModal}
+            >
+              <Icon icon="moreOptionsIcon" />
+            </Button>
+          </Flex>
           <MobileImage>
             <div className="image-container">
               <img src={selectedPost.image} alt="Post" />
@@ -105,6 +141,7 @@ const PostView = () => {
           </ActionContainer>
         </Details>
       </PostContainer>
+      <MoreOptionsModal modal={modal} content onClose={onCloseModal} />
     </Modal>
   );
 };

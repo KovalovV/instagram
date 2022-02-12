@@ -1,6 +1,11 @@
 import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
 
+export const Flex = styled.div`
+  ${flex.alignCenter}
+  ${flex.justifyBetween}
+`;
+
 export const ModalWrapper = styled.div`
   ${flex.center}
   position: absolute;

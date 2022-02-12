@@ -164,3 +164,52 @@ export const removeUserLike = async (postId, userId) => {
     likes: arrayRemove(userId),
   });
 };
+
+export const deleteUserPost = async (postId, userId) => {
+  const userRef = doc(db, "users", userId);
+
+  const usersRef = collection(db, "users");
+  const querySetUsers = query(
+    usersRef,
+    where("saved", "array-contains", postId)
+  );
+  const querySnapUsers = await getDocs(querySetUsers);
+  const usersId = [];
+  querySnapUsers.forEach((userDoc) => usersId.push(userDoc.data()));
+  // eslint-disable-next-line no-restricted-syntax
+  for (const { id } of usersId) {
+    const userSavedRef = doc(db, "users", id);
+    // eslint-disable-next-line no-await-in-loop
+    await updateDoc(userSavedRef, {
+      saved: arrayRemove(postId),
+    });
+  }
+
+  const commentsRef = collection(db, "comments");
+  const querySetComments = query(commentsRef, where("postID", "==", postId));
+  const querySnapComments = await getDocs(querySetComments);
+  const commentsId = [];
+  querySnapComments.forEach((commentDoc) => commentsId.push(commentDoc.data()));
+  // eslint-disable-next-line no-restricted-syntax
+  for (const { id } of commentsId) {
+    // eslint-disable-next-line no-await-in-loop
+    await deleteDoc(doc(db, "comments", id));
+  }
+
+  const likesRef = collection(db, "likes");
+  const querySetLikes = query(likesRef, where("postID", "==", postId));
+  const querySnapLikes = await getDocs(querySetLikes);
+  const likesId = [];
+  querySnapLikes.forEach((likeDoc) => likesId.push(likeDoc.data()));
+  // eslint-disable-next-line no-restricted-syntax
+  for (const { id } of likesId) {
+    // eslint-disable-next-line no-await-in-loop
+    await deleteDoc(doc(db, "likes", id));
+  }
+
+  await updateDoc(userRef, {
+    posts: arrayRemove(userId),
+  });
+
+  await deleteDoc(doc(db, "posts", postId));
+};

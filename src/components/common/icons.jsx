@@ -10,6 +10,7 @@ import { ReactComponent as HeartIcon } from "assets/icons/heartIcon.svg";
 import { ReactComponent as HomeIcon } from "assets/icons/homeIcon.svg";
 import { ReactComponent as LikeIcon } from "assets/icons/likeIcon.svg";
 import { ReactComponent as MessengerIcon } from "assets/icons/messengerIcon.svg";
+import { ReactComponent as MoreOptionsIcon } from "assets/icons/moreOptionsIcon.svg";
 import { ReactComponent as OptionsIcon } from "assets/icons/optionsIcon.svg";
 import { ReactComponent as PlusIcon } from "assets/icons/plusIcon.svg";
 import { ReactComponent as ProfileIcon } from "assets/icons/profileIcon.svg";
@@ -49,6 +50,8 @@ const getIcon = (iconName) => {
       return <LikeIcon />;
     case "messengerIcon":
       return <MessengerIcon />;
+    case "moreOptionsIcon":
+      return <MoreOptionsIcon />;
     case "plusIcon":
       return <PlusIcon />;
     case "optionsIcon":

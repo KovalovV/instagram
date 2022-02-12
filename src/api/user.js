@@ -43,15 +43,23 @@ export const searchUserByLogin = async (login) => {
 };
 
 export const getUserByLogin = async (login) => {
-  const collectionRef = collection(db, "users");
+  try {
+    const collectionRef = collection(db, "users");
 
-  const querySet = query(collectionRef, where("login", "==", login));
-  const querySnap = await getDocs(querySet);
+    const querySet = query(collectionRef, where("login", "==", login));
+    const querySnap = await getDocs(querySet);
 
-  const users = [];
-  querySnap.forEach((document) => users.push(document.data()));
+    const users = [];
+    querySnap.forEach((document) => users.push(document.data()));
 
-  return users.length ? users[0] : false;
+    if (!users.length) {
+      throw new Error("This user not exists");
+    }
+
+    return users[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
 export const getUserById = async (id) => {

@@ -2,6 +2,11 @@ import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
 import { sizes, colors, borders } from "./config";
 
+const moreOptionsStyles = css`
+  justify-content: center;
+  padding: 16px;
+`;
+
 const userStatsStyles = css`
   display: inline-block;
   font-size: 14px;
@@ -65,6 +70,7 @@ const initialStyles = css`
 
 const buttonStyles = {
   button: inputButtonStyles,
+  moreOptions: moreOptionsStyles,
   deleteButton: inputDeleteTextStyles,
   editProfile: editProfileStyles,
   submitEdit: submitEditStyles,
