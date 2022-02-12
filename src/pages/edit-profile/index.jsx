@@ -98,7 +98,6 @@ const EditProfile = () => {
   ]);
 
   const handleImage = async (e) => {
-    console.log("handleImage");
     const [photoObj] = e.target.files;
 
     setNewAvatar(photoObj);
