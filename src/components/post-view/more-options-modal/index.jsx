@@ -69,7 +69,7 @@ const MoreOptionsModal = ({ modal, onClose }) => {
           <Optional
             onClick={() =>
               isUserPost
-                ? onDelete
+                ? onDelete()
                 : toast.success("Report submitted successfully")
             }
           >
