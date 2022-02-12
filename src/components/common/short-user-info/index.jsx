@@ -8,7 +8,7 @@ import Skeleton from "@mui/material/Skeleton";
 
 import { api } from "api";
 
-import { HeaderDetails } from "./styles";
+import { HeaderDetails, InfoWrapper } from "./styles";
 
 const ShortUserInfo = ({ userId, width, height, withName, altitude }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,12 +45,12 @@ const ShortUserInfo = ({ userId, width, height, withName, altitude }) => {
             <Link to={`/u/${user.login}`}>
               <img src={user.avatar} alt="Avatar" />
             </Link>
-            <div>
+            <InfoWrapper>
               <h1>
                 <Link to={`/u/${user.login}`}>{user.login}</Link>
               </h1>
               {withName && <p>{user.name}</p>}
-            </div>
+            </InfoWrapper>
           </>
         )
       )}

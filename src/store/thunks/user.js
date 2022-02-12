@@ -49,7 +49,7 @@ export const signUpUserThunk = (userData) => async (dispatch) => {
     if (!(await api.user.getUserByLogin(userData.login))) {
       const { user } = await api.user.signUpUser(userData);
 
-      api.user.setUser(userData, user.uid);
+      api.user.addUser(userData, user.uid);
       const newUser = await api.user.getUserById(user.uid);
       const newUserData = newUser.data();
 

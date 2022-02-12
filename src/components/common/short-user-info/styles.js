@@ -15,20 +15,28 @@ export const HeaderDetails = styled.div(
       border-radius: 50%;
       margin-right: 14px;
     }
-
-    h1 {
-      color: #262626;
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
-      margin-top: -5px;
-    }
-
-    p {
-      color: #8e8e8e;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 18px;
-    }
   `
 );
+
+export const InfoWrapper = styled.div`
+  h1 {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #262626;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: -5px;
+  }
+
+  p {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #8e8e8e;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+  }
+`;

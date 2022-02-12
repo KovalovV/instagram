@@ -65,7 +65,7 @@ export const getUserById = async (id) => {
   }
 };
 
-export const setUser = async (formData, id) => {
+export const addUser = async (formData, id) => {
   const additionalUserProperties = {
     id,
     name: "",
@@ -95,7 +95,7 @@ export const googleAuth = async () => {
     const userSnap = await getUserById(user.uid);
 
     if (!userSnap.exists()) {
-      setUser(
+      addUser(
         {
           login: user.uid,
           email: user.email,

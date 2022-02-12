@@ -6,7 +6,6 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    user-select: none;
 }
 
 html, body, div, span, applet, object, iframe,

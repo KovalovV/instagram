@@ -75,6 +75,9 @@ export const ProfileLogin = styled.section(
     margin-bottom: 20px;
 
     h2 {
+      max-width: 400px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       font-weight: 300;
       font-size: 28px;
       line-height: 32px;
@@ -85,6 +88,7 @@ export const ProfileLogin = styled.section(
 
     ${down(735)} {
       h2 {
+        max-width: 200px;
         margin-right: 10px;
       }
     }
