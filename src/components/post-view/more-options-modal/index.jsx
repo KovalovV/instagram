@@ -1,17 +1,9 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { toast } from "react-toastify";
-
-import { Icon } from "components/common/icons";
-import Button from "components/common/button";
-
-import UserSuggestions from "components/common/user-suggestions";
-
-import ShortUserInfo from "components/common/short-user-info";
 
 import { api } from "api";
 

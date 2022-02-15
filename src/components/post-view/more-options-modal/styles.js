@@ -31,7 +31,6 @@ export const StyledMoreOptionsModal = styled.div`
 
 export const OptionalList = styled.ul`
   max-height: 359px;
-  overflow-y: scroll;
   scrollbar-width: none;
 `;
 
