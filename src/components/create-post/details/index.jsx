@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -7,6 +9,10 @@ import { setUserNewPostThunk } from "store/thunks/posting";
 import Button from "components/common/button";
 import Textarea from "components/common/textarea";
 
+import ShortUserInfo from "components/common/short-user-info";
+
+import { toast } from "react-toastify";
+
 import {
   Flex,
   Header,
@@ -14,7 +20,6 @@ import {
   Modal,
   PostImage,
   PostDetails,
-  HeaderDetails,
 } from "./styles";
 
 const Details = () => {
@@ -23,9 +28,11 @@ const Details = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { login, avatar } = useSelector((state) => state.user.currentUser);
   const { image, description } = useSelector((state) => state.posting);
-  const { id } = useSelector((state) => state.user.currentUser);
+  const { id, login } = useSelector((state) => state.user.currentUser);
+
+  // eslint-disable-next-line no-unused-vars
+  const [postImage, setPostImage] = useState(image);
 
   const onChange = (e) => {
     if (e.target.value.length < descriptionLimit) {
@@ -35,8 +42,13 @@ const Details = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(setUserNewPostThunk({ image, description }, id));
-    navigate("/");
+    try {
+      dispatch(setUserNewPostThunk({ image, description }, id));
+      toast.success("New post successfully created");
+      navigate(`/u/${login}`);
+    } catch (error) {
+      toast.error("The photo is too large");
+    }
   };
 
   return (
@@ -59,13 +71,10 @@ const Details = () => {
           </Header>
           <Flex>
             <PostImage>
-              <img src={image} alt="Post" />
+              <img src={postImage} alt="Post" />
             </PostImage>
             <PostDetails>
-              <HeaderDetails>
-                <img src={avatar} alt="Post" />
-                <h1>{login}</h1>
-              </HeaderDetails>
+              <ShortUserInfo userId={id} width="28px" height="28px" />
               <label htmlFor="description">
                 {description.length}/{descriptionLimit}
               </label>

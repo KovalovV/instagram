@@ -116,23 +116,3 @@ export const PostDetails = styled.div(
     }
   `
 );
-
-export const HeaderDetails = styled.div`
-  ${flex.alignCenter}
-  width: 100%;
-  height: 60px;
-  padding: 15px;
-
-  img {
-    width: 28px;
-    height: 28px;
-    margin-right: 10px;
-  }
-
-  h1 {
-    color: #262626;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-  }
-`;
