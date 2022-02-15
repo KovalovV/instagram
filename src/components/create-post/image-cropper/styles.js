@@ -18,6 +18,10 @@ export const FormContainer = styled.div`
     width: 100%;
     height: 348px;
   }
+
+  form canvas {
+    display: hidden;
+  }
 `;
 
 export const Center = styled.div`

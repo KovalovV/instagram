@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -22,53 +22,73 @@ import {
 } from "./styles";
 
 const ImageCropper = () => {
-  const [srcImg, setSrcImg] = useState(null);
-  const [image, setImage] = useState(null);
-  const [crop, setCrop] = useState({ aspect: 1 / 1 });
+  const [upImg, setUpImg] = useState();
+  const imgRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 100, aspect: 1 / 1 });
+  const [completedCrop, setCompletedCrop] = useState(null);
+  const previewCanvasRef = useRef(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleImage = (e) => {
-    setSrcImg(URL.createObjectURL(e.target.files[0]));
+  const generateDownload = (canvas) => {
+    dispatch(setPostImage(canvas.toDataURL("image/jpeg", 0.15)));
   };
 
-  const getCroppedImg = () => {
-    try {
-      const canvas = document.createElement("canvas");
-      const scaleX = image.naturalWidth / image.width;
-      const scaleY = image.naturalHeight / image.height;
-      canvas.width = crop.width;
-      canvas.height = crop.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(
-        image,
-        crop.x * scaleX,
-        crop.y * scaleY,
-        crop.width * scaleX,
-        crop.height * scaleY,
-        0,
-        0,
-        crop.width,
-        crop.height
-      );
-
-      const base64Image = canvas.toDataURL("image/jpeg", 1);
-
-      dispatch(setPostImage(base64Image));
-      return 1;
-    } catch (error) {
-      return 0;
+  const onSelectFile = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
+  const onLoad = useCallback((img) => {
+    imgRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+
+    const image = imgRef.current;
+    const canvas = previewCanvasRef.current;
+    // eslint-disable-next-line no-shadow
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+
+    const ctx = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+  }, [completedCrop]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (getCroppedImg()) {
-      navigate("/create/details");
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      toast.error("Choose and crop the image");
     } else {
-      toast.error("Crop the image");
+      generateDownload(previewCanvasRef.current, completedCrop);
+      navigate("/create/details");
     }
   };
 
@@ -90,7 +110,7 @@ const ImageCropper = () => {
               </Button>
             </div>
           </Header>
-          {!srcImg ? (
+          {!upImg ? (
             <Center>
               <SelectPhoto>
                 <Icon className="media" icon="mediaIcon" />
@@ -102,25 +122,33 @@ const ImageCropper = () => {
                   type="file"
                   accept="image/*"
                   id="select-photo"
-                  onChange={handleImage}
+                  onChange={onSelectFile}
                 />
               </SelectPhoto>
             </Center>
           ) : (
             <ImageContainer>
-              {srcImg && (
+              {upImg && (
                 <ReactCrop
                   style={{
                     height: "100%",
                   }}
-                  src={srcImg}
-                  onImageLoaded={setImage}
+                  src={upImg}
+                  onImageLoaded={onLoad}
                   crop={crop}
-                  onChange={setCrop}
+                  onChange={(c) => setCrop(c)}
+                  onComplete={(c) => setCompletedCrop(c)}
                 />
               )}
             </ImageContainer>
           )}
+          <canvas
+            ref={previewCanvasRef}
+            style={{
+              width: 0,
+              height: 0,
+            }}
+          />
         </form>
       </FormContainer>
     </Modal>
