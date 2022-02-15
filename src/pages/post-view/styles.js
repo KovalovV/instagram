@@ -32,7 +32,7 @@ export const PostContainer = styled.div(
     border-radius: 10px;
 
     min-height: 480px;
-    max-height: 650px;
+    max-height: 550px;
     width: 100%;
     max-width: 1000px;
     margin: 24px 64px;
@@ -49,7 +49,7 @@ export const Image = styled.div(
     ${flex.center}
     width: 0%;
     min-height: 280px;
-    max-height: 650px;
+    max-height: 550px;
     background-color: #000;
 
     .image-container {
@@ -61,7 +61,7 @@ export const Image = styled.div(
       display: none;
       width: 100%;
       min-height: auto;
-      max-height: 650px;
+      max-height: 550px;
     }
 
     ${up(735)} {

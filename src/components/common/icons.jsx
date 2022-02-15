@@ -25,6 +25,7 @@ import { ReactComponent as CameraIcon } from "assets/icons/cameraIcon.svg";
 import { ReactComponent as CloseIcon } from "assets/icons/closeIcon.svg";
 import { ReactComponent as CloseModalIcon } from "assets/icons/closeModalIcon.svg";
 import { ReactComponent as CommentIcon } from "assets/icons/commentIcon.svg";
+import { ReactComponent as VerifiedIcon } from "assets/icons/verifiedIcon.svg";
 
 import { ReactComponent as Spinner } from "assets/spinner.svg";
 
@@ -72,6 +73,8 @@ const getIcon = (iconName) => {
       return <TagIcon />;
     case "videoIcon":
       return <VideoIcon />;
+    case "verifiedIcon":
+      return <VerifiedIcon />;
     case "cameraIcon":
       return <CameraIcon />;
     case "closeIcon":

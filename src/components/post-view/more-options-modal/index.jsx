@@ -3,7 +3,10 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { deleteUserPostThunk } from "store/thunks/post";
+import {
+  deleteUserPostThunk,
+  setCurrentUserPostsThunk,
+} from "store/thunks/post";
 
 import { toast } from "react-toastify";
 
@@ -32,7 +35,8 @@ const MoreOptionsModal = ({ modal, onClose }) => {
 
   const onDelete = async () => {
     try {
-      dispatch(deleteUserPostThunk(selectedPost.id, currentUser.id));
+      await dispatch(deleteUserPostThunk(selectedPost.id, currentUser.id));
+      await dispatch(setCurrentUserPostsThunk(currentUser.id));
 
       navigate(`/u/${currentUser.login}`);
       toast.success("Post deleted");

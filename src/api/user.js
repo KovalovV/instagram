@@ -52,10 +52,6 @@ export const getUserByLogin = async (login) => {
     const users = [];
     querySnap.forEach((document) => users.push(document.data()));
 
-    if (!users.length) {
-      throw new Error("This user not exists");
-    }
-
     return users[0];
   } catch (error) {
     return Promise.reject(error);
@@ -156,7 +152,6 @@ export const updateProfileInfo = async (editedProfileInfo) => {
   try {
     const userRef = doc(db, "users", editedProfileInfo.id);
     const userSnap = await getDoc(userRef);
-
     const userData = userSnap.data();
 
     if (
@@ -167,10 +162,10 @@ export const updateProfileInfo = async (editedProfileInfo) => {
 
       toast.success("Profile info updated");
     } else {
-      throw Error("This login is exists");
+      throw Error("This username is exists");
     }
   } catch (error) {
-    toast.error("Profile info not updated");
+    toast.error(`${error.message}`);
   }
 };
 
@@ -249,7 +244,11 @@ export const getUserFeed = async (userId) => {
 export const getLastUsers = async (currentUserId) => {
   const usersRef = collection(db, "users");
 
-  const querySet = query(usersRef, where("id", "!=", currentUserId), limit(5));
+  const querySet = query(
+    usersRef,
+    where("id", "!=", currentUserId && "u5WYU79Sgcggbic5hzrxAdzYHxC2"),
+    limit(4)
+  );
   const querySnap = await getDocs(querySet);
 
   const lastUsers = [];

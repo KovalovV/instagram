@@ -24,7 +24,10 @@ import {
 } from "./styles";
 
 const Content = ({ isAuthUserPage }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [savedPosts, setSavedPosts] = useState([]);
 
   const navigate = useNavigate();
 
@@ -34,25 +37,34 @@ const Content = ({ isAuthUserPage }) => {
       ? state.user.currentUser
       : state.selectedUser.selectedUserProfile
   );
-  const { posts, saved: savedPosts } = useSelector((state) => state.post);
+  const userPost = useSelector((state) => state.post);
 
   const [content, setContent] = useState(posts);
   const [activeType, setActiveType] = useState("posts");
 
   useEffect(async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     await setContent(posts);
-    setIsLoading(false);
+    // setIsLoading(false);
   }, [posts]);
 
+  useEffect(async () => {
+    setIsLoading(true);
+    await dispatch(setCurrentUserPostsThunk(userId));
+    await dispatch(setCurrentUserSavedPostsThunk(userSaved));
+    setIsLoading(false);
+  }, []);
+
   useEffect(() => {
-    dispatch(setCurrentUserPostsThunk(userId));
-    dispatch(setCurrentUserSavedPostsThunk(userSaved));
-  }, [dispatch, userId, userSaved]);
+    // setIsLoading(true);
+    setPosts(userPost.posts);
+    setSavedPosts(userPost.savedPosts);
+    // setIsLoading(false);
+  }, [userPost.posts, userPost.saved]);
 
   const onClickPosts = (e) => {
     setActiveType(`${e.target.id}`);
-    setContent(posts);
+    setContent(userPost.posts);
   };
 
   const onClickVideo = (e) => {
@@ -62,7 +74,7 @@ const Content = ({ isAuthUserPage }) => {
 
   const onClickSaved = (e) => {
     setActiveType(`${e.target.id}`);
-    setContent(savedPosts);
+    setContent(userPost.saved);
   };
 
   const onClickTag = (e) => {
@@ -113,30 +125,28 @@ const Content = ({ isAuthUserPage }) => {
           ))}
         </Posts>
       ) : (
-        <>
-          <Posts>
-            {Boolean(content.length) &&
-              content.map((post, index) => (
-                <PostItemWrapper key={`${post.id}`}>
-                  <PostItem key={`${post.id}-${index}`}>
-                    <img src={post.image} alt="Post" />
-                  </PostItem>
-                  <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
-                    <InfoItem key={`${post.id}-1`}>
-                      <Icon icon="filledHeartIcon" fill="#fff" />
-                      <span>{post.likes.length}</span>
-                    </InfoItem>
-                    <InfoItem key={`${post.id}-41`}>
-                      <Icon icon="commentIcon" fill="#fff" />
-                      <span>{post.comments.length}</span>
-                    </InfoItem>
-                  </ExtraInfo>
-                </PostItemWrapper>
-              ))}
-          </Posts>
-          <EmptyPosts contentLength={content.length} />
-        </>
+        <Posts>
+          {Boolean(content.length) &&
+            content.map((post, index) => (
+              <PostItemWrapper key={`${post.id}`}>
+                <PostItem key={`${post.id}-${index}`}>
+                  <img src={post.image} alt="Post" />
+                </PostItem>
+                <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
+                  <InfoItem key={`${post.id}-1`}>
+                    <Icon icon="filledHeartIcon" fill="#fff" />
+                    <span>{post.likes.length}</span>
+                  </InfoItem>
+                  <InfoItem key={`${post.id}-41`}>
+                    <Icon icon="commentIcon" fill="#fff" />
+                    <span>{post.comments.length}</span>
+                  </InfoItem>
+                </ExtraInfo>
+              </PostItemWrapper>
+            ))}
+        </Posts>
       )}
+      <EmptyPosts contentLength={content.length} />
     </>
   );
 };

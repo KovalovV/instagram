@@ -39,17 +39,27 @@ const UserSuggestions = ({ width, height, type, altitude }) => {
           />
         </Box>
       ) : (
-        lastUsers &&
-        lastUsers.map((user) => (
+        <>
           <ShortUserInfo
-            key={user.id}
-            userId={user.id}
+            key="u5WYU79Sgcggbic5hzrxAdzYHxC2"
+            userId="u5WYU79Sgcggbic5hzrxAdzYHxC2"
             width={width}
             height={height}
             withName
             altitude={altitude}
           />
-        ))
+          {lastUsers &&
+            lastUsers.map((user) => (
+              <ShortUserInfo
+                key={user.id}
+                userId={user.id}
+                width={width}
+                height={height}
+                withName
+                altitude={altitude}
+              />
+            ))}
+        </>
       )}
     </SuggestionsContainer>
   );

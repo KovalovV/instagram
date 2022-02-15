@@ -93,7 +93,12 @@ const Header = ({ isAuthUserPage }) => {
         <ProfileDescription>
           <Flex>
             <ProfileLogin>
-              <h2>{selectedLogin}</h2>
+              <h2>
+                {selectedLogin}{" "}
+                {selectedId === "u5WYU79Sgcggbic5hzrxAdzYHxC2" && (
+                  <Icon icon="verifiedIcon" />
+                )}
+              </h2>
             </ProfileLogin>
 
             {isAuthUserPage ? (
@@ -144,7 +149,12 @@ const Header = ({ isAuthUserPage }) => {
         <ProfileDescription>
           <Flex>
             <ProfileLogin>
-              <h2>{selectedLogin}</h2>
+              <h2>
+                {selectedLogin}{" "}
+                {selectedId === "u5WYU79Sgcggbic5hzrxAdzYHxC2" && (
+                  <Icon icon="verifiedIcon" />
+                )}
+              </h2>
             </ProfileLogin>
             {isAuthUserPage && <Icon icon="optionsIcon" />}
           </Flex>

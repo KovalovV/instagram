@@ -8,6 +8,8 @@ import Skeleton from "@mui/material/Skeleton";
 
 import { api } from "api";
 
+import { Icon } from "components/common/icons";
+
 import { HeaderDetails, InfoWrapper } from "./styles";
 
 const ShortUserInfo = ({ userId, width, height, withName, altitude }) => {
@@ -47,7 +49,12 @@ const ShortUserInfo = ({ userId, width, height, withName, altitude }) => {
             </Link>
             <InfoWrapper>
               <h1>
-                <Link to={`/u/${user.login}`}>{user.login}</Link>
+                <Link to={`/u/${user.login}`}>
+                  {user.login}
+                  {user.id === "u5WYU79Sgcggbic5hzrxAdzYHxC2" && (
+                    <Icon icon="verifiedIcon" style={{ marginLeft: `5px` }} />
+                  )}
+                </Link>
               </h1>
               {withName && <p>{user.name}</p>}
             </InfoWrapper>
