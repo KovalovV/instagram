@@ -9,6 +9,7 @@ export const SignContainer = styled.div`
   margin: 32px auto 0;
   padding-bottom: 32px;
   width: 100%;
+  height: 100vh;
 `;
 
 export const SignArticle = styled.article(

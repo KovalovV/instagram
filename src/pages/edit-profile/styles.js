@@ -89,7 +89,6 @@ export const PropLabel = styled.label(
     line-height: 18px;
     margin-top: 6px;
     flex-basis: 25px;
-    padding: 0 20px;
 
     ${up(735)} {
       flex: 0 0 150px;

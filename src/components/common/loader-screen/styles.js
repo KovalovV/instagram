@@ -3,6 +3,8 @@ import { flex } from "utils/flex";
 
 export const LoaderScreenContainer = styled.div`
   position: fixed;
+  top: 0px;
+  left: 0px;
 
   ${flex.center}
   width: 100vw;

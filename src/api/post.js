@@ -86,11 +86,15 @@ export const addUserPost = async (postData, userId) => {
   };
 
   const postDataDb = { ...postData, ...additionalPostProperties };
-
-  await setDoc(postRef, postDataDb);
-  await updateDoc(userRef, {
-    posts: arrayUnion(postRef.id),
-  });
+  try {
+    await setDoc(postRef, postDataDb);
+    await updateDoc(userRef, {
+      posts: arrayUnion(postRef.id),
+    });
+    return 1;
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
 export const addUserSavedPost = async (postId, userId) => {

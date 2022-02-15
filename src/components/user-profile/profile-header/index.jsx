@@ -126,7 +126,13 @@ const Header = ({ isAuthUserPage }) => {
           <ProfileAbout>
             <h1>{selectedName}</h1>
             <span>{selectedBio}</span>
-            <a href={selectedWebsite}>{selectedWebsite}</a>
+            <a
+              href={`http://${selectedWebsite}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {selectedWebsite}
+            </a>
           </ProfileAbout>
         </ProfileDescription>
       </ProfileHeader>
@@ -165,13 +171,13 @@ const Header = ({ isAuthUserPage }) => {
       <ProfileMobileAbout>
         <h1>{selectedName}</h1>
         <span>{selectedBio}</span>
-        <Link
-          to={`http://${selectedWebsite}`}
+        <a
+          href={`http://${selectedWebsite}`}
           rel="noopener noreferrer"
           target="_blank"
         >
           {selectedWebsite}
-        </Link>
+        </a>
       </ProfileMobileAbout>
       <ProfileStats
         isAuthUserPage={isAuthUserPage}

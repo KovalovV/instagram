@@ -22,10 +22,18 @@ const SignIn = () => {
       <GetApp>
         <p>Get the app.</p>
         <div className="install-store">
-          <a href="https://www.apple.com/">
+          <a
+            href="https://play.google.com/store/apps"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             <img src={installAppAndroid} alt="install Android" />
           </a>
-          <a href="https://www.apple.com/">
+          <a
+            href="https://www.apple.com/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             <img src={installAppIos} alt="install Ios" />
           </a>
         </div>
