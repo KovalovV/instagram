@@ -11,6 +11,8 @@ import {
   setCurrentUserSavedPostsThunk,
 } from "store/thunks/post";
 
+import Skeleton from "@mui/material/Skeleton";
+
 import {
   ContentType,
   ContentTypeItem,
@@ -22,6 +24,8 @@ import {
 } from "./styles";
 
 const Content = ({ isAuthUserPage }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -39,9 +43,11 @@ const Content = ({ isAuthUserPage }) => {
     setContent(posts);
   }, [posts]);
 
-  useEffect(() => {
-    dispatch(setCurrentUserPostsThunk(userId));
-    dispatch(setCurrentUserSavedPostsThunk(userSaved));
+  useEffect(async () => {
+    setIsLoading(true);
+    await dispatch(setCurrentUserPostsThunk(userId));
+    await dispatch(setCurrentUserSavedPostsThunk(userSaved));
+    setIsLoading(false);
   }, [dispatch, userId, userSaved]);
 
   const onClickPosts = (e) => {
@@ -94,26 +100,41 @@ const Content = ({ isAuthUserPage }) => {
           </ContentTypeItem>
         ))}
       </ContentType>
-      <Posts>
-        {Boolean(content.length) &&
-          content.map((post, index) => (
-            <PostItemWrapper key={`${post.id}`}>
-              <PostItem key={`${post.id}-${index}`}>
-                <img src={post.image} alt="Post" />
+      {isLoading ? (
+        <Posts>
+          {[1, 2, 3].map((item) => (
+            <PostItemWrapper key={item}>
+              <PostItem>
+                <Skeleton variant="rectangular" width="100%" count={3}>
+                  <div style={{ paddingTop: "100%" }} />
+                </Skeleton>
               </PostItem>
-              <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
-                <InfoItem key={`${post.id}-1`}>
-                  <Icon icon="filledHeartIcon" fill="#fff" />
-                  <span>{post.likes.length}</span>
-                </InfoItem>
-                <InfoItem key={`${post.id}-41`}>
-                  <Icon icon="commentIcon" fill="#fff" />
-                  <span>{post.comments.length}</span>
-                </InfoItem>
-              </ExtraInfo>
             </PostItemWrapper>
           ))}
-      </Posts>
+        </Posts>
+      ) : (
+        <Posts>
+          {Boolean(content.length) &&
+            content.map((post, index) => (
+              <PostItemWrapper key={`${post.id}`}>
+                <PostItem key={`${post.id}-${index}`}>
+                  <img src={post.image} alt="Post" />
+                </PostItem>
+                <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
+                  <InfoItem key={`${post.id}-1`}>
+                    <Icon icon="filledHeartIcon" fill="#fff" />
+                    <span>{post.likes.length}</span>
+                  </InfoItem>
+                  <InfoItem key={`${post.id}-41`}>
+                    <Icon icon="commentIcon" fill="#fff" />
+                    <span>{post.comments.length}</span>
+                  </InfoItem>
+                </ExtraInfo>
+              </PostItemWrapper>
+            ))}
+        </Posts>
+      )}
+
       <EmptyPosts contentLength={content.length} />
     </>
   );
