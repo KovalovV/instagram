@@ -212,7 +212,7 @@ export const deleteUserPost = async (postId, userId) => {
   }
 
   await updateDoc(userRef, {
-    posts: arrayRemove(userId),
+    posts: arrayRemove(postId),
   });
 
   await deleteDoc(doc(db, "posts", postId));

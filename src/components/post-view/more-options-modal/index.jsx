@@ -1,11 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { deleteUserPostThunk } from "store/thunks/post";
 
 import { toast } from "react-toastify";
-
-import { api } from "api";
 
 import {
   MoreOptionsModalWrapper,
@@ -23,6 +23,7 @@ const MoreOptionsModal = ({ modal, onClose }) => {
   const isUserPost = currentUser.posts.some((id) => id === params.postId);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onCopy = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -31,7 +32,8 @@ const MoreOptionsModal = ({ modal, onClose }) => {
 
   const onDelete = async () => {
     try {
-      await api.post.deleteUserPost(selectedPost.id, currentUser.id);
+      dispatch(deleteUserPostThunk(selectedPost.id, currentUser.id));
+
       navigate(`/u/${currentUser.login}`);
       toast.success("Post deleted");
     } catch (error) {

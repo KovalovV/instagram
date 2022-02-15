@@ -6,6 +6,8 @@ import {
   setSelectedPostComments,
 } from "store/actions/post";
 
+import { setUpdatedUserThunk } from "store/thunks/user";
+
 export const setCurrentUserPostsThunk = (userId) => async (dispatch) => {
   const userPosts = await api.post.getAllUserPosts(userId);
 
@@ -32,4 +34,10 @@ export const setSelectedPostCommentsThunk = (postId) => async (dispatch) => {
   const selectedPostComments = await api.post.getAllPostCommentsById(postId);
 
   dispatch(setSelectedPostComments(selectedPostComments));
+};
+
+export const deleteUserPostThunk = (postId, userId) => async (dispatch) => {
+  await api.post.deleteUserPost(postId, userId);
+
+  dispatch(setUpdatedUserThunk(userId));
 };

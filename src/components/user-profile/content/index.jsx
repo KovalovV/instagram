@@ -24,7 +24,7 @@ import {
 } from "./styles";
 
 const Content = ({ isAuthUserPage }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -39,15 +39,15 @@ const Content = ({ isAuthUserPage }) => {
   const [content, setContent] = useState(posts);
   const [activeType, setActiveType] = useState("posts");
 
-  useEffect(() => {
-    setContent(posts);
-  }, [posts]);
-
   useEffect(async () => {
     setIsLoading(true);
-    await dispatch(setCurrentUserPostsThunk(userId));
-    await dispatch(setCurrentUserSavedPostsThunk(userSaved));
+    await setContent(posts);
     setIsLoading(false);
+  }, [posts]);
+
+  useEffect(() => {
+    dispatch(setCurrentUserPostsThunk(userId));
+    dispatch(setCurrentUserSavedPostsThunk(userSaved));
   }, [dispatch, userId, userSaved]);
 
   const onClickPosts = (e) => {
@@ -113,29 +113,30 @@ const Content = ({ isAuthUserPage }) => {
           ))}
         </Posts>
       ) : (
-        <Posts>
-          {Boolean(content.length) &&
-            content.map((post, index) => (
-              <PostItemWrapper key={`${post.id}`}>
-                <PostItem key={`${post.id}-${index}`}>
-                  <img src={post.image} alt="Post" />
-                </PostItem>
-                <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
-                  <InfoItem key={`${post.id}-1`}>
-                    <Icon icon="filledHeartIcon" fill="#fff" />
-                    <span>{post.likes.length}</span>
-                  </InfoItem>
-                  <InfoItem key={`${post.id}-41`}>
-                    <Icon icon="commentIcon" fill="#fff" />
-                    <span>{post.comments.length}</span>
-                  </InfoItem>
-                </ExtraInfo>
-              </PostItemWrapper>
-            ))}
-        </Posts>
+        <>
+          <Posts>
+            {Boolean(content.length) &&
+              content.map((post, index) => (
+                <PostItemWrapper key={`${post.id}`}>
+                  <PostItem key={`${post.id}-${index}`}>
+                    <img src={post.image} alt="Post" />
+                  </PostItem>
+                  <ExtraInfo onClick={() => navigate(`/p/${post.id}`)}>
+                    <InfoItem key={`${post.id}-1`}>
+                      <Icon icon="filledHeartIcon" fill="#fff" />
+                      <span>{post.likes.length}</span>
+                    </InfoItem>
+                    <InfoItem key={`${post.id}-41`}>
+                      <Icon icon="commentIcon" fill="#fff" />
+                      <span>{post.comments.length}</span>
+                    </InfoItem>
+                  </ExtraInfo>
+                </PostItemWrapper>
+              ))}
+          </Posts>
+          <EmptyPosts contentLength={content.length} />
+        </>
       )}
-
-      <EmptyPosts contentLength={content.length} />
     </>
   );
 };
