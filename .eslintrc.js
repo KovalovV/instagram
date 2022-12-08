@@ -33,6 +33,7 @@ module.exports = {
     "react/jsx-props-no-spreading": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "react/no-unused-prop-types": 0,
+    "no-unused-vars": 1,
     "no-param-reassign": [
       "error",
       { props: true, ignorePropertyModificationsFor: ["state"] },
