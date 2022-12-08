@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { flex } from "utils/flex";
 
 export const Flex = styled.div`

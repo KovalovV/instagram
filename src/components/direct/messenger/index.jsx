@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 
 import ShortUserInfo from "components/common/short-user-info";
@@ -9,8 +8,6 @@ import { MessengerContainer, HeaderMessenger, Flex } from "./styles";
 
 const Messenger = () => {
   const params = useParams();
-
-  const { id } = useSelector((state) => state.user.currentUser);
 
   return (
     <MessengerContainer>

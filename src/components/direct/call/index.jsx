@@ -137,15 +137,6 @@ const Call = () => {
           )}
 
           <Paper className={classes.paper}>
-            {/* <Typography gutterBottom variant="h6">
-                Account Info
-              </Typography>
-              <TextField
-                label="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                fullWidth
-              /> */}
             <Center>
               <CallInfo>
                 <CopyToClipboard text={me}>
@@ -179,39 +170,6 @@ const Call = () => {
                 </CallButton>
               </CallInfo>
             </Center>
-
-            {callAccepted && !callEnded ? (
-              <span />
-            ) : (
-              // <Button
-              //   variant="contained"
-              //   color="secondary"
-              //   fullWidth
-              //   onClick={leaveCall}
-              // >
-              //   Hang Up
-              // </Button>
-              <span />
-              // <CallButton
-              //   type="bold"
-              //   size="default"
-              //   color="white"
-              //   bgColor="blue"
-              //   onClick={() => callUser(idToCall)}
-              //   disabled={!idToCall}
-              // >
-              //   Start Call
-              // </CallButton>
-              // <Button
-              //   variant="contained"
-              //   color="primary"
-              //   // startIcon={<Phone fontSize="large" />}
-              //   fullWidth
-
-              // >
-              //   Call
-              // </Button>
-            )}
           </Paper>
         </CallContainer>
       </Center>

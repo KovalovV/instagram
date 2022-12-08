@@ -19,8 +19,6 @@ import {
 const Direct = () => {
   const params = useParams();
 
-  const dispatch = useDispatch();
-
   const {
     id: currentId,
     login: currentLogin,
