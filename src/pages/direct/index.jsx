@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Outlet, Link, useParams } from "react-router-dom";
 
 import ShortUserInfo from "components/common/short-user-info";
