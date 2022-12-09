@@ -11,11 +11,16 @@ import SignIn from "pages/sign-in";
 import SignUp from "pages/sign-up";
 import ForgotPassword from "pages/forgot-password";
 import Home from "pages/home";
+import Direct from "pages/direct";
 import UserProfile from "pages/user-profile";
 import EditProfile from "pages/edit-profile";
 import Posting from "pages/create-post";
 import PostView from "pages/post-view";
 import NotFound from "pages/not-found";
+
+import Messenger from "components/direct/messenger";
+import Call from "components/direct/call";
+import CallNotifications from "components/direct/call-notifications";
 
 import GlobalStyles from "styles/globalStyles";
 
@@ -27,6 +32,7 @@ const App = () => (
       <GlobalStyles />
       <ToastContainer />
       <NavBar />
+      <CallNotifications />
       <Routes>
         <Route
           path="/"
@@ -66,6 +72,33 @@ const App = () => (
             <PrivateRoute>
               <PostView />
             </PrivateRoute>
+          }
+        />
+        <Route
+          path="/direct"
+          element={
+            <PrivateRoute>
+              <Direct />
+            </PrivateRoute>
+          }
+        >
+          <Route
+            path="/direct/t/:chatId"
+            element={
+              <PrivateRoute>
+                <Messenger />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+        <Route
+          path="/call"
+          element={
+            // <SocketContextProvider>
+            <PrivateRoute>
+              <Call />
+            </PrivateRoute>
+            // </SocketContextProvider>
           }
         />
         <Route path="/sign-in" element={<SignIn />} />

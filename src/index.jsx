@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "store";
 
+import { SocketContextProvider } from "context/call";
+
 import { setCurrentUserThunk } from "store/thunks/user";
 
 import LoaderScreen from "components/common/loader-screen";
@@ -24,9 +26,11 @@ const Root = () => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <Root />
-    </React.StrictMode>
+    <SocketContextProvider>
+      <React.StrictMode>
+        <Root />
+      </React.StrictMode>
+    </SocketContextProvider>
   </Provider>,
   document.getElementById("root")
 );

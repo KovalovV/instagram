@@ -12,7 +12,14 @@ import { Icon } from "components/common/icons";
 
 import { HeaderDetails, InfoWrapper } from "./styles";
 
-const ShortUserInfo = ({ userId, width, height, withName, altitude }) => {
+const ShortUserInfo = ({
+  userId,
+  width,
+  height,
+  withName,
+  altitude,
+  link = "login",
+}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
@@ -50,7 +57,8 @@ const ShortUserInfo = ({ userId, width, height, withName, altitude }) => {
             <InfoWrapper>
               <h1>
                 <Link to={`/u/${user.login}`}>
-                  {user.login}
+                  {link === "login" && user.login}
+                  {link === "name" && user.name}
                   {user.id === "u5WYU79Sgcggbic5hzrxAdzYHxC2" && (
                     <Icon icon="verifiedIcon" style={{ marginLeft: `5px` }} />
                   )}

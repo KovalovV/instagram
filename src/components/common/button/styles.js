@@ -64,6 +64,10 @@ const inputDeleteTextStyles = css`
   margin-right: 10px;
 `;
 
+const boldStyles = css`
+  font-weight: 600;
+`;
+
 const initialStyles = css`
   position: relative;
 `;
@@ -77,6 +81,7 @@ const buttonStyles = {
   followProfile: followProfileStyles,
   userStats: userStatsStyles,
   userStatsMobile: userStatsMobileStyles,
+  bold: boldStyles,
 };
 
 const getButtonStyleByType = (type) => buttonStyles[type] || initialStyles;

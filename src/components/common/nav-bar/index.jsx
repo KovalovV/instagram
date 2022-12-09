@@ -17,10 +17,10 @@ import {
 const NavBar = () => {
   const location = useLocation();
 
-  const emptyPath = ["/sign-up", "/sign-in", "/forgot-password"];
+  const emptyPath = ["/sign-up", "/sign-in", "/forgot-password", "/call"];
 
-  const navigateIcons = ["home", "messenger", "plus", "explore", "heart"];
-  const routeIcons = ["", "messenger", "create", "explore", "heart"];
+  const navigateIcons = ["home", "direct", "plus", "explore", "heart"];
+  const routeIcons = ["", "direct", "create", "explore", "heart"];
 
   if (emptyPath.some((path) => path === location.pathname)) {
     return <span />;

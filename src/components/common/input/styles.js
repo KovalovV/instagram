@@ -35,6 +35,20 @@ const searchStyles = css`
   }
 `;
 
+const roundingTextStyles = css`
+  border-radius: 16px;
+  min-width: 125px;
+  width: 80%;
+  height: auto;
+  cursor: text;
+  padding: 8px 12px;
+
+  &::placeholder {
+    font-weight: 600;
+    font-size: 16px;
+  }
+`;
+
 const formStyles = css`
   border: 1px solid ${colors.darkGrey};
   border-radius: 4px;
@@ -61,6 +75,7 @@ const inputStyles = {
   email: formStyles,
   password: formStyles,
   passwordVisible: formStyles,
+  roundingText: roundingTextStyles,
 };
 
 const getInputStyleByType = (type) => inputStyles[type] || initialStyles;
