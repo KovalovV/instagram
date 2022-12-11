@@ -22,7 +22,11 @@ const NavBar = () => {
   const navigateIcons = ["home", "direct", "plus", "explore", "heart"];
   const routeIcons = ["", "direct", "create", "explore", "heart"];
 
-  if (emptyPath.some((path) => path === location.pathname)) {
+  if (
+    emptyPath.some(
+      (path) => path === location.pathname || location.pathname.includes(path)
+    )
+  ) {
     return <span />;
   }
 

@@ -1,4 +1,10 @@
-import { useParams, Link } from "react-router-dom";
+import { useMemo } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+
+import { setShowCallModal } from "store/actions/call";
+
+import { setOutcomeUserThunk } from "store/thunks/call";
 
 import ShortUserInfo from "components/common/short-user-info";
 import Button from "components/common/button";
@@ -8,6 +14,9 @@ import { MessengerContainer, HeaderMessenger, Flex } from "./styles";
 
 const Messenger = () => {
   const params = useParams();
+  const dispatch = useDispatch();
+
+  const userId = useMemo(() => params.chatId.split("-")[0], [params]);
 
   return (
     <MessengerContainer>
@@ -19,16 +28,18 @@ const Messenger = () => {
             height="30px"
             link="name"
           />
-          <Link to="/call" target="_blank" rel="noopener noreferrer">
-            <Button
-              type="moreOptionsStyles"
-              color="dark"
-              bgColor="transparent"
-              size="default"
-            >
-              <Icon icon="callIcon" />
-            </Button>
-          </Link>
+          <Button
+            type="moreOptionsStyles"
+            color="dark"
+            bgColor="transparent"
+            size="default"
+            onClick={() => {
+              dispatch(setOutcomeUserThunk(userId));
+              dispatch(setShowCallModal(true));
+            }}
+          >
+            <Icon icon="callIcon" />
+          </Button>
         </Flex>
       </HeaderMessenger>
     </MessengerContainer>

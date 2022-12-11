@@ -12,6 +12,7 @@ const colors = {
   grey: { active: "#8e8e8e", disabled: "#95d5fc" },
   blue: { active: "#0095f6", disabled: "#95d5fc" },
   white: { active: "#ffffff", disabled: "#ffffff" },
+  green: { active: "#5eba7d", disabled: "#94d0a8" },
   transparent: { active: "transparent", disabled: "transparent" },
 };
 

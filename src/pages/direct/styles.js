@@ -60,16 +60,31 @@ export const MainContainer = styled(Card)(
   `
 );
 
-export const Left = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+export const Left = styled.div(
+  ({ theme: { up, breakpoints } }) => css`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 
-export const Right = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
+    ${up(breakpoints.smd)} {
+      width: 32%;
+    }
+  `
+);
+
+export const Right = styled.div(
+  ({ theme: { up, breakpoints } }) => css`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-top: 1px solid #dbdbdb;
+
+    ${up(breakpoints.smd)} {
+      width: 68%;
+      border-top: none;
+    }
+  `
+);
 
 export const HeaderList = styled.div`
   display: flex;
@@ -92,11 +107,19 @@ export const HeaderList = styled.div`
   }
 `;
 
-export const UserList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 75vh;
-  overflow-y: scroll;
-  padding: 8px 0;
-`;
+export const UserList = styled.div(
+  ({ theme: { up, breakpoints } }) => css`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 75vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 8px 0;
+    border-right: 1px solid #dbdbdb;
+
+    ${up(breakpoints.smd)} {
+      border-right: 1px solid #dbdbdb;
+    }
+  `
+);

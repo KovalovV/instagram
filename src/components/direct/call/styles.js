@@ -1,12 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { flex } from "utils/flex";
 import { StyledButton } from "components/common/button/styles";
-
-export const Background = styled.div`
-  height: 100vh;
-  width: 100vw;
-  background-color: #000;
-`;
 
 export const Center = styled.div`
   ${flex.alignCenter}
@@ -14,16 +8,47 @@ export const Center = styled.div`
   height: 100%;
 `;
 
-export const CallContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  margin: 0 auto;
-  max-width: 1024px;
-`;
+export const CallContainer = styled.div(
+  ({ theme: { up, breakpoints } }) => css`
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 auto;
+
+    ${up(breakpoints.smd)} {
+      flex-direction: row;
+    }
+  `
+);
+
+export const Card = styled.div(
+  ({ theme: { up, breakpoints } }) => css`
+    min-height: auto;
+    border-radius: 8px;
+    background-color: #1f1f1f;
+    overflow: hidden;
+
+    ${up(breakpoints.smd)} {
+      min-height: 360px;
+    }
+  `
+);
 
 export const UserVideo = styled.div`
   position: relative;
 `;
+
+export const Video = styled.video(
+  ({ theme: { up, breakpoints } }) => css`
+    height: 42vh;
+    width: 90vw;
+
+    ${up(breakpoints.smd)} {
+      height: 60vh;
+      width: 45vw;
+    }
+  `
+);
 
 export const Actions = styled.div`
   display: flex;
