@@ -33,6 +33,7 @@ const App = () => (
       <ToastContainer />
       <NavBar />
       <CallNotifications />
+      <Call />
       <Routes>
         <Route
           path="/"
@@ -91,16 +92,14 @@ const App = () => (
             }
           />
         </Route>
-        <Route
-          path="/call"
+        {/* <Route
+          path="/call/:roomId"
           element={
-            // <SocketContextProvider>
             <PrivateRoute>
               <Call />
             </PrivateRoute>
-            // </SocketContextProvider>
           }
-        />
+        /> */}
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

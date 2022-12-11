@@ -5,7 +5,7 @@ import Input from "components/common/input";
 
 import { api } from "api";
 
-import useDebounce from "hooks/debounce";
+import useDebounce from "hooks/useDebounce";
 
 import Spinner from "components/common/spinner";
 import ShortUserInfo from "components/common/short-user-info";

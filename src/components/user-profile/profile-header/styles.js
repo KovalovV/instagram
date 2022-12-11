@@ -70,6 +70,19 @@ export const ProfileDescription = styled.section`
   width: 65%;
 `;
 
+export const Buttons = styled.div(
+  ({ theme: { up } }) => css`
+    display: flex;
+    gap: 10px;
+    height: 30px;
+    margin-top: 5px;
+
+    ${up(735)} {
+      height: 100%;
+    }
+  `
+);
+
 export const ProfileLogin = styled.section(
   ({ theme: { down } }) => css`
     margin-bottom: 20px;

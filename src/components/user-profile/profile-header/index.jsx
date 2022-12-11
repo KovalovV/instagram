@@ -16,6 +16,7 @@ import ProfileStats from "./profile-stats";
 
 import FollowModal from "./follow-modal";
 import FollowButton from "./follow-button";
+import CallButton from "./call-button";
 
 import {
   Flex,
@@ -26,6 +27,7 @@ import {
   ProfileLogin,
   ProfileAbout,
   ProfileMobileAbout,
+  Buttons,
 } from "./styles";
 
 const Header = ({ isAuthUserPage }) => {
@@ -116,11 +118,14 @@ const Header = ({ isAuthUserPage }) => {
                 </Link>
               </>
             ) : (
-              <FollowButton
-                size="small"
-                isFollowing={isFollowing(selectedId)}
-                handleFollow={() => handleFollow(selectedId)}
-              />
+              <Buttons>
+                <FollowButton
+                  size="small"
+                  isFollowing={isFollowing(selectedId)}
+                  handleFollow={() => handleFollow(selectedId)}
+                />
+                <CallButton size="small" />
+              </Buttons>
             )}
           </Flex>
           <ProfileStats
@@ -170,11 +175,14 @@ const Header = ({ isAuthUserPage }) => {
               </Button>
             </Link>
           ) : (
-            <FollowButton
-              size="large"
-              isFollowing={isFollowing(selectedId)}
-              handleFollow={() => handleFollow(selectedId)}
-            />
+            <Buttons>
+              <FollowButton
+                size="large"
+                isFollowing={isFollowing(selectedId)}
+                handleFollow={() => handleFollow(selectedId)}
+              />
+              <CallButton size="small" />
+            </Buttons>
           )}
         </ProfileDescription>
       </ProfileMobileHeader>

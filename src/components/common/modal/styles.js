@@ -3,7 +3,7 @@ import { flex } from "utils/flex";
 
 export const ModalWrapper = styled.div`
   ${flex.center}
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 100%;
@@ -16,6 +16,7 @@ export const ModalWrapper = styled.div`
     position: absolute;
     top: 20px;
     right: 20px;
+    z-index: 1;
     cursor: pointer;
   }
 `;

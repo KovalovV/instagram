@@ -8,6 +8,16 @@ import React, {
 import { io } from "socket.io-client";
 import Peer from "simple-peer";
 
+import { useSelector, useDispatch } from "react-redux";
+
+import { api } from "api";
+
+import { setUpdatedUserThunk } from "store/thunks/user";
+
+import useAudio from "hooks/useAudio";
+
+import outcomeCall from "assets/audio/outcomeCall.mp3";
+
 const SocketContext = createContext();
 
 // const socket = io('http://localhost:5000');
@@ -21,24 +31,31 @@ const SocketContextProvider = ({ children }) => {
   const [call, setCall] = useState({});
   const [me, setMe] = useState("");
 
-  const [withVideoData, setWithVideoData] = useState(false);
+  const [withVideoData, setWithVideoData] = useState(true);
   const [withAudioData, setWithAudioData] = useState(true);
+
+  const [_, playAudio, stopAudio] = useAudio(outcomeCall);
 
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
 
-  useEffect(async () => {
-    navigator.mediaDevices
-      .getUserMedia({ video: withVideoData, audio: withAudioData })
-      .then((currentStream) => {
-        setStream(currentStream);
+  const dispatch = useDispatch();
 
-        if (myVideo.current) {
-          myVideo.current.srcObject = currentStream;
-        }
-      });
+  const { id: currentUserId, login: currentLogin } = useSelector(
+    (state) => state.user.currentUser
+  );
 
+  const handleUpdatePeerId = async (peerId) => {
+    await api.user.updateSocketId({
+      userId: currentUserId,
+      peerId,
+    });
+
+    dispatch(setUpdatedUserThunk(currentUserId));
+  };
+
+  useEffect(() => {
     socket.on("me", (id) => {
       setMe(id);
     });
@@ -46,7 +63,23 @@ const SocketContextProvider = ({ children }) => {
     socket.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-  }, [withVideoData, withAudioData, myVideo]);
+  }, []);
+
+  useEffect(async () => {
+    if (currentUserId) {
+      setName(currentLogin);
+      await handleUpdatePeerId(me);
+    }
+  }, [me, currentUserId]);
+
+  useEffect(
+    () => async () => {
+      await handleUpdatePeerId(null);
+      socket.off("me");
+      socket.off("callUser");
+    },
+    []
+  );
 
   const answerCall = () => {
     setCallAccepted(true);
@@ -67,6 +100,7 @@ const SocketContextProvider = ({ children }) => {
   };
 
   const callUser = (id) => {
+    playAudio();
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     peer.on("signal", (data) => {
@@ -84,6 +118,7 @@ const SocketContextProvider = ({ children }) => {
 
     socket.on("callAccepted", (signal) => {
       setCallAccepted(true);
+      stopAudio();
 
       peer.signal(signal);
     });
@@ -107,6 +142,7 @@ const SocketContextProvider = ({ children }) => {
         myVideo,
         userVideo,
         stream,
+        setStream,
         name,
         setName,
         callEnded,
@@ -118,6 +154,8 @@ const SocketContextProvider = ({ children }) => {
         setWithVideoData,
         withAudioData,
         setWithAudioData,
+        playAudio,
+        stopAudio,
       }))}
     >
       {children}
@@ -125,4 +163,4 @@ const SocketContextProvider = ({ children }) => {
   );
 };
 
-export { SocketContextProvider, SocketContext };
+export { SocketContextProvider, SocketContext, socket };

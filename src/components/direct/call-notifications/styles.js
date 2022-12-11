@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const CallNotificationsContainer = styled.div`
   position: fixed;
+  top: 0;
   right: 0;
   display: flex;
   align-items: center;
@@ -10,6 +11,7 @@ export const CallNotificationsContainer = styled.div`
   padding: 12px;
   border-radius: 16px;
   background-color: #222222;
+  z-index: 10;
 
   h2 {
     color: white;

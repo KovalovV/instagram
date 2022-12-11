@@ -169,6 +169,18 @@ export const updateProfileInfo = async (editedProfileInfo) => {
   }
 };
 
+export const updateSocketId = async (socketData) => {
+  try {
+    const userRef = doc(db, "users", socketData.userId);
+
+    await updateDoc(userRef, socketData);
+
+    // throw Error('Something went wrong, please try later!');
+  } catch (error) {
+    toast.error(`${error.message}`);
+  }
+};
+
 export const addUserFollowing = async (userId, followingId) => {
   const userRef = doc(db, "users", userId);
   const followingIdUserRef = doc(db, "users", followingId);
